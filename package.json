@@ -2,6 +2,8 @@
   "name": "weather",
   "version": "0.1.0",
   "private": true,
+  "author": "Derek Czysz",
+  "license": "MIT",
   "dependencies": {
     "@xstate/react": "^0.8.1",
     "axios": "^0.19.0",
@@ -13,7 +15,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && move build ../public",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

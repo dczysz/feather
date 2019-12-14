@@ -139,8 +139,10 @@ const CollapsingDay = ({ day, timeZone }) => {
             )}
             <Icon />
             <div className="temps">
-              <p>{day.apparentTemperatureHigh.toFixed()}&deg;</p>
-              <p className="low">{day.apparentTemperatureLow.toFixed()}&deg;</p>
+              <p>{Math.round(day.apparentTemperatureHigh)}&deg;</p>
+              <p className="low">
+                {Math.round(day.apparentTemperatureLow)}&deg;
+              </p>
             </div>
           </div>
         </div>
@@ -155,7 +157,7 @@ const CollapsingDay = ({ day, timeZone }) => {
           </p>
           <p>
             <span className="label">Humidity</span>{' '}
-            <span className="value">{day.humidity * 100}%</span>
+            <span className="value">{Math.round(day.humidity * 100)}%</span>
           </p>
           <p>
             <span className="label">Sunrise/Sunset</span>{' '}

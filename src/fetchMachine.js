@@ -7,7 +7,7 @@ import axios from 'axios';
 const fetchWeather = context => {
   const { query } = context;
 
-  return axios.get('/weather/' + query).then(res => res.data);
+  return axios.get('/api/weather/' + query).then(res => res.data);
 };
 
 const fetchMachine = Machine({

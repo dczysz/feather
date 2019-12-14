@@ -33,7 +33,9 @@ const App = () => {
   console.log('[App] rendering');
   const BG_HUE = { day: 195, night: 240 };
 
-  const [dayIndex, setDayIndex] = useState(2);
+  const [dayIndex, setDayIndex] = useState(
+    process.env.NODE_ENV === 'production' ? 0 : 2
+  );
   const [bgHue, setBgHue] = useState(BG_HUE.day);
   const [current, send] = useMachine(fetchMachine);
 

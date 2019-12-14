@@ -15,7 +15,7 @@ const StyledNav = styled.nav`
     height: 4px;
     background-color: ${p => p.theme.white};
     position: absolute;
-    bottom: 0;
+    bottom: 1px;
     left: calc(33.333% * ${p => p.dayIndex});
     transition: left 0.1s ease-in-out;
     border-radius: var(--left-br) var(--right-br) var(--right-br) var(--left-br);
@@ -26,6 +26,8 @@ const StyledNavButton = styled.label`
   width: 100%;
   padding: 1rem;
   text-align: center;
+  cursor: pointer;
+  color: ${p => p.theme.white};
 
   input {
     display: none;

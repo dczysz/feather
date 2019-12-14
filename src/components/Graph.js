@@ -173,7 +173,7 @@ const Graph = ({ hourly, minTemp, maxTemp }) => {
                 ) - 12
               }
             >
-              {h.temp.toFixed()}&deg;
+              {Math.round(h.temp)}&deg;
             </text>
           ))}
 

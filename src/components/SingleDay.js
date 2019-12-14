@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import icons from '../assets/icons';
+import { getTime } from '../util';
 
 const StyledDay = styled.div`
   position: relative;
@@ -40,26 +41,7 @@ const StyledDay = styled.div`
   }
 `;
 
-const getTime = (timeMs, timeZone, isToday) => {
-  console.log('[SingleDay getTime() ', timeMs, timeZone, isToday);
-  const date = new Date(timeMs);
-  const month = date.toDateString().split(' ')[1];
-  const day = date.toDateString().split(' ')[0];
-  const dayNum = date.getDate();
-  const time =
-    date
-      .toLocaleTimeString('en-US', { timeZone })
-      .split(' ')[0]
-      .split(':')
-      .slice(0, 2)
-      .join(':') +
-    ' ' +
-    date.toLocaleTimeString('en-US', { timeZone }).split(' ')[1];
-  return isToday ? `${month} ${dayNum}, ${time}` : `${day}, ${month} ${dayNum}`;
-};
-
 const SingleDay = ({ weather, dayIndex }) => {
-  console.log(weather);
   const { currently, daily } = weather;
   const isToday = dayIndex === 0;
   const selectedDay = isToday ? currently : daily.data[1];
@@ -75,18 +57,18 @@ const SingleDay = ({ weather, dayIndex }) => {
     <StyledDay dayIndex={dayIndex}>
       <p className="date">{dateString}</p>
       <p className="high-low">
-        Day {daily.data[isToday ? 0 : 1].temperatureHigh.toFixed()}&deg; ⬆
-        &bull; Night {daily.data[isToday ? 0 : 1].temperatureLow.toFixed()}&deg;
-        ⬇{' '}
+        Day {Math.round(daily.data[isToday ? 0 : 1].temperatureMax)}&deg; ⬆
+        &bull; Night {Math.round(daily.data[isToday ? 0 : 1].temperatureMin)}
+        &deg; ⬇{' '}
       </p>
       {isToday && (
         <p className="temp">
-          {currently.temperature.toFixed()}&deg;<sup>F</sup>
+          {Math.round(currently.temperature)}&deg;<sup>F</sup>
         </p>
       )}
       <p>
         {isToday
-          ? `Feels like ${currently.apparentTemperature.toFixed()}`
+          ? `Feels like ${Math.round(currently.apparentTemperature)}`
           : selectedDay.summary}
       </p>
 

@@ -32,7 +32,7 @@ const Weather = ({ weather, dayIndex }) => {
   return (
     <>
       {dayIndex === 2 ? (
-        <ManyDays daily={weather.daily} />
+        <ManyDays daily={weather.daily} timeZone={weather.timezone} />
       ) : (
         <>
           <SingleDay weather={weather} dayIndex={dayIndex} />

@@ -23,13 +23,17 @@ const StyledApp = styled.div`
 
 const theme = {
   lightBg: '#fff4',
-  white: '#fffd',
+  white: '#fffc',
+  black: '#111',
+  grey: '#111a',
+  blue: 'hsl(195, 60%, 60%)',
 };
 
 const App = () => {
+  console.log('[App] rendering');
   const BG_HUE = { day: 195, night: 240 };
 
-  const [dayIndex, setDayIndex] = useState(0);
+  const [dayIndex, setDayIndex] = useState(2);
   const [bgHue, setBgHue] = useState(BG_HUE.day);
   const [current, send] = useMachine(fetchMachine);
 
@@ -38,14 +42,12 @@ const App = () => {
   const memoizedBgHueHandler = useCallback(
     ratio => {
       const hue = ratio > 0 && ratio < 1 ? BG_HUE.day : BG_HUE.night;
-      console.log(`[App] bgHueHandler. Changing hue to ${hue}...`);
       setBgHue(hue);
     },
     [BG_HUE.day, BG_HUE.night]
   );
 
   useEffect(() => {
-    console.log('[App useEffect()] current.context.weather: ', weather);
     if (!weather) return;
 
     memoizedBgHueHandler(
@@ -61,7 +63,6 @@ const App = () => {
 
   const dayIndexChangedHandler = e => {
     const { value: index } = e.target;
-    console.log('[App dayIndexChangedHandler()]', weather, index);
     setDayIndex(+index);
   };
 

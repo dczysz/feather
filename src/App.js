@@ -7,14 +7,22 @@ import SearchBar from './components/SearchBar';
 import Weather from './components/Weather';
 import Nav from './components/Nav';
 import { calculateRatio } from './util';
+import Menu from './components/Menu';
 
 const StyledApp = styled.div`
-  height: 100vh;
-  max-height: 100vh;
+  background-image: linear-gradient(
+    350deg,
+    hsl(${p => p.bgHue}, 60%, 50%),
+    hsl(${p => p.bgHue}, 60%, 60%)
+  );
+  color: ${p => p.theme.black};
   display: flex;
   flex-direction: column;
-  background-color: hsl(${p => p.bgHue}, 60%, 60%);
-  transition: background-color 0.2s;
+  height: 100vh;
+  max-height: 100vh;
+  position: relative;
+  transition: background-image 0.2s;
+  overflow: hidden;
 
   .top-bar {
     background-color: ${p => p.theme.lightBg};
@@ -26,7 +34,10 @@ const theme = {
   white: '#fffc',
   black: '#111',
   grey: '#111a',
+  lightGrey: '#1112',
+  shadow: '#1118',
   blue: 'hsl(195, 60%, 60%)',
+  br: '0.3em',
 };
 
 const App = () => {
@@ -34,9 +45,10 @@ const App = () => {
   const BG_HUE = { day: 195, night: 240 };
 
   const [dayIndex, setDayIndex] = useState(
-    process.env.NODE_ENV === 'production' ? 0 : 2
+    process.env.NODE_ENV === 'production' ? 0 : 0
   );
   const [bgHue, setBgHue] = useState(BG_HUE.day);
+  const [menuOpen, setMenuOpen] = useState(true);
   const [current, send] = useMachine(fetchMachine);
 
   const { weather } = current.context;
@@ -68,14 +80,25 @@ const App = () => {
     setDayIndex(+index);
   };
 
+  const toggleMenu = e => {
+    e && e.preventDefault();
+    setMenuOpen(!menuOpen);
+    return false;
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <StyledApp bgHue={bgHue}>
         <div className="top-bar">
-          <SearchBar current={current} send={send} />
+          <SearchBar current={current} send={send} showMenu={toggleMenu} />
           <Nav dayIndex={dayIndex} change={dayIndexChangedHandler} />
         </div>
         {weather && <Weather weather={weather} dayIndex={dayIndex} />}
+        <Menu
+          isOpen={menuOpen}
+          close={toggleMenu}
+          query={current.context.query}
+        />
       </StyledApp>
     </ThemeProvider>
   );

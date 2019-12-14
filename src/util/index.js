@@ -43,3 +43,15 @@ export const degreeToDirection = deg => {
 
   return output;
 };
+
+export const makeParameterValue = (name, key) =>
+  `${name}=${key.replace(/ /g, '+')}`;
+
+export const getParamUrl = (params = [], baseUrl = window.location.origin) =>
+  `${baseUrl}?${params.map(p => makeParameterValue(p.key, p.value)).join('&')}`;
+
+export const copyToClipboard = el => {
+  console.log('Copying ' + el.value + ' to clipboard');
+  el.select();
+  document.execCommand('copy');
+};

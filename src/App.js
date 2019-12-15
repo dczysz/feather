@@ -30,15 +30,15 @@ const StyledApp = styled.div`
 `;
 
 const theme = {
-  lightBg: '#fff4',
-  black: '#111d',
-  white: 'hsl(195, 60%, 95%)',
-  grey: '#111a',
-  lightGrey: '#1114',
-  shadow: '#1116',
+  black: '#333',
   blue: 'hsl(195, 60%, 60%)',
   br: '0.3em',
   error: '#b04',
+  grey: '#666',
+  lightBg: '#fff4',
+  lightGrey: '#aaa',
+  shadow: '#1116',
+  white: '#ebf6fa',
 };
 
 const App = () => {

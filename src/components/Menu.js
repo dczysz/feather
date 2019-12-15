@@ -100,7 +100,7 @@ const StyledMenu = styled.div`
   }
 
   .background {
-    background-color: ${p => p.theme.grey};
+    background-color: ${p => p.theme.shadow};
     opacity: ${p => (p.open ? 1 : 0)};
     transition: opacity var(--animation-time);
     width: 100%;

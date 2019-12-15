@@ -152,8 +152,8 @@ const Graph = ({ hourly, minTemp, maxTemp }) => {
                 opts.ySize * 1.5,
                 opts.graphHeight
               )} L${getSvgX(opts.hourWidth, hourData.length)},${
-                opts.width
-              } L0,${opts.width} L0,${calculateRatioValue(
+                opts.height
+              } L0,${opts.height} L0,${calculateRatioValue(
                 hourData[0].temp,
                 maxTemp,
                 minTemp,

@@ -78,7 +78,7 @@ const StyledCollapsingDay = styled.div`
 
     .hidden-content {
       transition: all var(--transition-time) ease-in-out;
-      max-height: ${p => (p.open ? '5.5rem' : '0px')};
+      max-height: ${p => (p.open ? `${p.hiddenHeight}rem` : '0px')};
       overflow-y: hidden;
 
       p {
@@ -117,8 +117,12 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
     setOpen(!open);
   };
 
+  const precipExpected = day.precipType && day.precipProbability >= 0.1;
+  let height = 7;
+  height += precipExpected ? 1.5 : 0;
+
   return (
-    <StyledCollapsingDay open={open}>
+    <StyledCollapsingDay open={open} hiddenHeight={height}>
       <button aria-expanded={open} onClick={toggleOpen}>
         <div className="clickable-content">
           <div className="summary">
@@ -128,7 +132,7 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
             <p>{day.summary}</p>
           </div>
           <div className="icon-and-temp">
-            {day.precipType && day.precipProbability >= 0.1 && (
+            {precipExpected && (
               <p className="precip-probability">
                 {Math.round(day.precipProbability * 100)}%
               </p>
@@ -155,6 +159,24 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
             <span className="label">Humidity</span>{' '}
             <span className="value">{Math.round(day.humidity * 100)}%</span>
           </p>
+          <p>
+            <span className="label">UV Index</span>{' '}
+            <span className="value">{Math.round(day.uvIndex)}</span>
+          </p>
+          {precipExpected && (
+            <p>
+              <span className="label">Chance of {day.precipType}</span>{' '}
+              <span className="value">
+                {day.precipAccumulation || day.precipIntensity
+                  ? Math.round(
+                      (day.precipAccumulation || day.precipIntensity) * 100
+                    ) /
+                      100 +
+                    ' in'
+                  : Math.round(day.precipProbability * 100) + '%'}
+              </span>
+            </p>
+          )}
           <p>
             <span className="label">Sunrise/Sunset</span>{' '}
             <span className="value">

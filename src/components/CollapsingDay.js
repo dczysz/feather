@@ -78,7 +78,7 @@ const StyledCollapsingDay = styled.div`
 
     .hidden-content {
       transition: all var(--transition-time) ease-in-out;
-      max-height: ${p => (p.open ? `${p.hiddenHeight}rem` : '0px')};
+      max-height: ${p => (p.open ? p.numLines * 1.5 + 1 + 'rem' : '0px')};
       overflow-y: hidden;
 
       p {
@@ -113,16 +113,59 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
   const [open, setOpen] = useState(false);
   const Icon = icons[day.icon];
 
+  const precipExpected = day.precipType && day.precipProbability >= 0.1;
+
+  const hiddenContent = [
+    {
+      label: 'Wind',
+      value:
+        Math.round(day.windSpeed) + 'mph' + degreeToDirection(day.windBearing),
+    },
+    {
+      label: 'Humidity',
+      value: `${Math.round(day.humidity * 100)}%`,
+    },
+    {
+      label: 'UV Index',
+      value: Math.round(day.uvIndex),
+    },
+    precipExpected
+      ? {
+          label: `Chance of ${day.precipType}`,
+          value:
+            day.precipAccumulation || day.precipIntensity
+              ? Math.round(
+                  (day.precipAccumulation || day.precipIntensity) * 100
+                ) /
+                  100 +
+                ' in'
+              : Math.round(day.precipProbability * 100) + '%',
+        }
+      : null,
+    {
+      label: 'Sunrise/Sunset',
+      value:
+        getTime(day.sunriseTime * 1000, timeZone, true)
+          .split(',')[1]
+          .trim() +
+        ', ' +
+        getTime(day.sunsetTime * 1000, timeZone, true)
+          .split(',')[1]
+          .trim(),
+    },
+  ];
+
+  const numHiddenLines = hiddenContent.reduce(
+    (acc, curr) => (acc += curr ? 1 : 0),
+    0
+  );
+
   const toggleOpen = () => {
     setOpen(!open);
   };
 
-  const precipExpected = day.precipType && day.precipProbability >= 0.1;
-  let height = 7;
-  height += precipExpected ? 1.5 : 0;
-
   return (
-    <StyledCollapsingDay open={open} hiddenHeight={height}>
+    <StyledCollapsingDay open={open} numLines={numHiddenLines}>
       <button aria-expanded={open} onClick={toggleOpen}>
         <div className="clickable-content">
           <div className="summary">
@@ -148,47 +191,15 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
         </div>
 
         <div className="hidden-content" aria-hidden={!open}>
-          <p>
-            <span className="label">Wind</span>{' '}
-            <span className="value">
-              {Math.round(day.windSpeed)} mph{' '}
-              {day.windSpeed && degreeToDirection(day.windBearing)}
-            </span>
-          </p>
-          <p>
-            <span className="label">Humidity</span>{' '}
-            <span className="value">{Math.round(day.humidity * 100)}%</span>
-          </p>
-          <p>
-            <span className="label">UV Index</span>{' '}
-            <span className="value">{Math.round(day.uvIndex)}</span>
-          </p>
-          {precipExpected && (
-            <p>
-              <span className="label">Chance of {day.precipType}</span>{' '}
-              <span className="value">
-                {day.precipAccumulation || day.precipIntensity
-                  ? Math.round(
-                      (day.precipAccumulation || day.precipIntensity) * 100
-                    ) /
-                      100 +
-                    ' in'
-                  : Math.round(day.precipProbability * 100) + '%'}
-              </span>
-            </p>
+          {hiddenContent.map(
+            c =>
+              c && (
+                <p key={c.label}>
+                  <span className="label">{c.label}</span>
+                  <span className="value">{c.value}</span>
+                </p>
+              )
           )}
-          <p>
-            <span className="label">Sunrise/Sunset</span>{' '}
-            <span className="value">
-              {getTime(day.sunriseTime * 1000, timeZone, true)
-                .split(',')[1]
-                .trim()}
-              {', '}
-              {getTime(day.sunsetTime * 1000, timeZone, true)
-                .split(',')[1]
-                .trim()}
-            </span>
-          </p>
         </div>
       </button>
     </StyledCollapsingDay>

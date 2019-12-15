@@ -1,9 +1,40 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import styled, { keyframes } from 'styled-components';
 
-import { ReactComponent as SearchIcon } from '../assets/search-icon.svg';
-import Spinner from './Spinner';
-import Ellipsis from './Ellipsis';
+import { ReactComponent as SearchSvg } from '../assets/search.svg';
+import { ReactComponent as MenuIcon } from '../assets/menu.svg';
+import { ReactComponent as LoadingSvg } from '../assets/loader.svg';
+
+const spinAnimation = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const errorAnimation = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-30%);
+  }
+  40% {
+    transform: translateX(25%);
+  }
+  60% {
+    transform: translateX(-20%);
+  }
+  80% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
 
 const StyledSearchBar = styled.form`
   margin: 1rem 1rem 0 1rem;
@@ -14,11 +45,13 @@ const StyledSearchBar = styled.form`
     display: flex;
     align-items: center;
     position: relative;
+    height: 3rem;
 
     input {
       background-color: transparent;
       border: none;
       font-size: 1rem;
+      line-height: 1rem;
       margin: 0;
       min-width: 0;
       padding: 1rem;
@@ -27,29 +60,35 @@ const StyledSearchBar = styled.form`
     }
 
     button {
-      padding: 0.9rem;
+      padding: 0.5rem;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       border: none;
       cursor: pointer;
       margin: 0 1rem;
       background-color: transparent;
-      height: 3rem;
-      width: 3rem;
+      height: 100%;
+      width: auto;
       font-size: 1rem;
       line-height: 1rem;
       font-weight: bold;
       fill: ${p => p.theme.error.grey};
 
-      &.error {
-        fill: ${p => p.theme.error};
-      }
-
       svg {
         width: 100%;
         height: 100%;
-        fill: inherit;
+        stroke: ${p => p.theme.grey};
+
+        &.error {
+          animation: ${errorAnimation} 300ms;
+          stroke: ${p => p.theme.error};
+        }
+
+        &.spin {
+          animation: ${spinAnimation} 1000ms infinite linear;
+        }
       }
 
       &:first-of-type {
@@ -71,10 +110,13 @@ const getParameterValue = (name, url = window.location.search) => {
 const SearchBar = ({ current, send, showMenu }) => {
   console.log('[SearchBar] rendering');
   const [query, setQuery] = useState(current.context.query);
+  const [error, setError] = useState(false);
+  const inputRef = useRef();
 
   const fetchWeatherData = useCallback(
     query => {
       if (query) {
+        setError(false);
         send('CHANGE', { value: query });
         send('FETCH');
       }
@@ -94,8 +136,13 @@ const SearchBar = ({ current, send, showMenu }) => {
     }
   }, [fetchWeatherData]);
 
+  useEffect(() => {
+    setError(!current.context.weather && current.context.query !== '');
+  }, [current.context, current.context.query]);
+
   const changeHandler = e => {
     setQuery(e.target.value);
+    setError(false);
   };
 
   const submitHandler = e => {
@@ -103,22 +150,25 @@ const SearchBar = ({ current, send, showMenu }) => {
     fetchWeatherData(query);
   };
 
-  const error = !current.context.weather && current.context.query !== '';
-
   return (
     <StyledSearchBar onSubmit={submitHandler}>
       <div className="input-container">
         <button type="button" onClick={showMenu}>
-          <Ellipsis />
+          <MenuIcon />
         </button>
         <input
           type="text"
           value={query}
           onChange={changeHandler}
           placeholder="City and State"
+          ref={inputRef}
         />
-        <button type="submit" className={error ? 'error' : ''}>
-          {current.matches('loading') ? <Spinner /> : <SearchIcon />}
+        <button type="submit">
+          {current.matches('loading') ? (
+            <LoadingSvg className="spin" />
+          ) : (
+            <SearchSvg className={error ? 'error' : ''} />
+          )}
         </button>
       </div>
     </StyledSearchBar>

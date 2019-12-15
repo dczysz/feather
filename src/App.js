@@ -42,7 +42,6 @@ const theme = {
 };
 
 const App = () => {
-  console.log('[App] rendering');
   const BG_HUE = { day: 195, night: 240 };
 
   const [dayIndex, setDayIndex] = useState(

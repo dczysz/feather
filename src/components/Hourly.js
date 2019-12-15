@@ -11,7 +11,6 @@ const StyledHourly = styled.div`
 `;
 
 const Hourly = ({ hourlyArray, min, max }) => {
-  console.log('[Hourly] Rendering');
   return (
     <StyledHourly>
       <Graph hourly={hourlyArray} minTemp={min} maxTemp={max} />

@@ -6,9 +6,6 @@ import Hourly from './Hourly';
 import { max, min } from '../util';
 
 const Weather = ({ weather, dayIndex }) => {
-  console.info(weather);
-  if (weather == null) return null;
-
   const hourlyTemps = weather.hourly.data.map(h => h.temperature);
   const maxTemp = max(hourlyTemps);
   const minTemp = min(hourlyTemps);

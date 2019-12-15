@@ -108,7 +108,6 @@ const getParameterValue = (name, url = window.location.search) => {
 };
 
 const SearchBar = ({ current, send, showMenu }) => {
-  console.log('[SearchBar] rendering');
   const [query, setQuery] = useState(current.context.query);
   const [error, setError] = useState(false);
   const inputRef = useRef();
@@ -153,7 +152,7 @@ const SearchBar = ({ current, send, showMenu }) => {
   return (
     <StyledSearchBar onSubmit={submitHandler}>
       <div className="input-container">
-        <button type="button" onClick={showMenu}>
+        <button type="button" onClick={showMenu} aria-label="Show Menu">
           <MenuIcon />
         </button>
         <input
@@ -162,8 +161,9 @@ const SearchBar = ({ current, send, showMenu }) => {
           onChange={changeHandler}
           placeholder="City and State"
           ref={inputRef}
+          aria-label="City and State"
         />
-        <button type="submit">
+        <button type="submit" aria-label="Go">
           {current.matches('loading') ? (
             <LoadingSvg className="spin" />
           ) : (

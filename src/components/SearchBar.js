@@ -67,18 +67,16 @@ const StyledSearchBar = styled.form`
       justify-content: center;
       border: none;
       cursor: pointer;
-      margin: 0 1rem;
+      margin: 0 0.5rem;
       background-color: transparent;
-      height: 100%;
+      height: 3rem;
       width: auto;
       font-size: 1rem;
       line-height: 1rem;
       font-weight: bold;
-      fill: ${p => p.theme.error.grey};
 
       svg {
-        width: 100%;
-        height: 100%;
+        height: 1.5em;
         stroke: ${p => p.theme.grey};
 
         &.error {
@@ -127,7 +125,6 @@ const SearchBar = ({ current, send, showMenu }) => {
     const paramQuery = getParameterValue('q');
 
     if (paramQuery) {
-      console.log('Fetching ', paramQuery);
       window.history.pushState({ data: null }, null, '');
       setQuery(paramQuery);
 

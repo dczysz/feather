@@ -6,6 +6,7 @@ import Hourly from './Hourly';
 import { max, min } from '../util';
 
 const Weather = ({ weather, dayIndex }) => {
+  console.info(weather);
   if (weather == null) return null;
 
   const hourlyTemps = weather.hourly.data.map(h => h.temperature);
@@ -29,10 +30,16 @@ const Weather = ({ weather, dayIndex }) => {
     return isToday ? today : tomorrow;
   };
 
+  const moreInfoUrl = `https://darksky.net/forecast/${weather.location.lat},${weather.location.lon}/`;
+
   return (
     <>
       {dayIndex === 2 ? (
-        <ManyDays daily={weather.daily} timeZone={weather.timezone} />
+        <ManyDays
+          daily={weather.daily}
+          timeZone={weather.timezone}
+          moreInfoUrl={moreInfoUrl}
+        />
       ) : (
         <>
           <SingleDay weather={weather} dayIndex={dayIndex} />

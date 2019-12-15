@@ -27,7 +27,7 @@ const StyledGraph = styled.div`
     stroke-width: 2;
 
     .x-grid {
-      stroke: white;
+      stroke: ${p => p.theme.white};
     }
 
     .grid {
@@ -35,10 +35,14 @@ const StyledGraph = styled.div`
     }
 
     text {
-      fill: black;
+      fill: ${p => p.theme.white};
       font-size: 0.8rem;
       stroke: none;
       text-anchor: middle;
+
+      &.hour {
+        fill: ${p => p.theme.black};
+      }
     }
 
     .graph {
@@ -55,7 +59,7 @@ const StyledGraph = styled.div`
       }
 
       .icon {
-        fill: white;
+        fill: ${p => p.theme.white};
         stroke: none;
       }
     }
@@ -161,6 +165,7 @@ const Graph = ({ hourly, minTemp, maxTemp }) => {
 
           {hourData.map((h, i) => (
             <text
+              className="temp"
               key={h.time}
               x={getSvgX(opts.hourWidth, i)}
               y={
@@ -195,6 +200,7 @@ const Graph = ({ hourly, minTemp, maxTemp }) => {
         <g className="hour-labels">
           {hourData.map((h, i) => (
             <text
+              className="hour"
               key={h.time}
               x={getSvgX(opts.hourWidth, i)}
               y={opts.height - opts.ySize / 2 + 4}

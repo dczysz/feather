@@ -12,9 +12,9 @@ const fetchWeather = context => {
 
 const fetchMachine = Machine({
   id: 'fetch',
-  initial: process.env.NODE_ENV === 'production' ? 'idle' : 'loading',
+  initial: 'idle',
   context: {
-    query: process.env.NODE_ENV === 'production' ? '' : 'chicago, il',
+    query: '',
     weather: null,
   },
   states: {

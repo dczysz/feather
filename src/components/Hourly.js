@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import Graph from './Graph.js';
 
 const StyledHourly = styled.div`
+  height: 100%;
   margin-top: auto;
-  height: 50vh;
+  max-height: 24rem;
   overflow-x: auto;
 `;
 

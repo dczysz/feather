@@ -13,19 +13,48 @@ const opacityAnimation = keyframes`
 
 const StyledManyDays = styled.div`
   animation: ${opacityAnimation} 1000ms;
-  background-color: ${p => p.theme.white};
+  background-color: ${p => p.theme.lightBg};
   height: 100%;
   overflow-y: auto;
+
+  .more-info {
+    align-items: center;
+    background-color: ${p => p.theme.white};
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+
+    a {
+      background-color: ${p => p.theme.white};
+      box-shadow: 0 0 4px ${p => p.theme.shadow};
+      border: 1px solid ${p => p.theme.lightGrey};
+      border-radius: ${p => p.theme.br};
+      color: ${p => p.theme.black};
+      line-height: 1rem;
+      margin: 1rem;
+      padding: 1rem;
+      text-align: center;
+      width: 100%;
+    }
+  }
 `;
 
-const ManyDays = ({ daily, timeZone }) => {
+const ManyDays = ({ daily, timeZone, moreInfoUrl }) => {
   console.log('[ManyDays] props.daily: ', daily, timeZone);
 
   return (
     <StyledManyDays>
       {daily.data.map((d, i) => (
-        <CollapsingDay key={d.time} day={d} timeZone={timeZone} />
+        <CollapsingDay
+          key={d.time}
+          day={d}
+          timeZone={timeZone}
+          isToday={i === 0}
+        />
       ))}
+      <div className="more-info">
+        <a href={moreInfoUrl}>View web results</a>
+      </div>
     </StyledManyDays>
   );
 };

@@ -19,10 +19,8 @@ const StyledCollapsingDay = styled.div`
   animation: ${expandAnimation} var(--animation-time) ease;
   transition: all var(--transition-time);
   overflow-y: hidden;
-
-  &:not(:first-child) {
-    border-top: 1px solid ${p => p.theme.grey};
-  }
+  border-bottom: 1px solid ${p => p.theme.grey};
+  background-color: ${p => p.theme.white};
 
   button {
     all: inherit;
@@ -31,10 +29,6 @@ const StyledCollapsingDay = styled.div`
     margin: 0;
     padding: 0 1rem;
     width: 100%;
-
-    /* :focus {
-      box-shadow: inset 0 0 4px ${p => p.theme.grey};
-    } */
 
     p {
       margin: 0.5rem 0;
@@ -115,7 +109,7 @@ const StyledCollapsingDay = styled.div`
   }
 `;
 
-const CollapsingDay = ({ day, timeZone }) => {
+const CollapsingDay = ({ day, timeZone, isToday }) => {
   const [open, setOpen] = useState(false);
   const Icon = icons[day.icon];
 
@@ -128,7 +122,9 @@ const CollapsingDay = ({ day, timeZone }) => {
       <button aria-expanded={open} onClick={toggleOpen}>
         <div className="clickable-content">
           <div className="summary">
-            <p>{new Date(day.time * 1000).toDateString()}</p>
+            <p>
+              {isToday ? 'Today' : new Date(day.time * 1000).toDateString()}
+            </p>
             <p>{day.summary}</p>
           </div>
           <div className="icon-and-temp">

@@ -25,10 +25,10 @@ const StyledMenu = styled.div`
   }
 
   .menu-container {
-    background: white;
+    background: ${p => p.theme.white};
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 60%;
     max-width: 20rem;
     overflow-y: auto;
     overflow-x: hidden;

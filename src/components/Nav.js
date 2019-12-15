@@ -10,24 +10,28 @@ const StyledNav = styled.nav`
   --left-br: ${p => (p.dayIndex === 0 ? '0px' : '1000px')};
   --right-br: ${p => (p.dayIndex === 2 ? '0px' : '1000px')};
   ::after {
-    content: '';
-    width: 33.333%;
-    height: 4px;
     background-color: ${p => p.theme.white};
-    position: absolute;
-    bottom: 1px;
-    left: calc(33.333% * ${p => p.dayIndex});
-    transition: left 0.1s ease-in-out;
     border-radius: var(--left-br) var(--right-br) var(--right-br) var(--left-br);
+    bottom: 1px;
+    content: '';
+    height: 4px;
+    left: calc(33.333% * ${p => p.dayIndex});
+    pointer-events: none;
+    position: absolute;
+    transition: left 0.1s ease-in-out;
+    width: 33.333%;
   }
 `;
 
 const StyledNavButton = styled.label`
-  width: 100%;
+  color: ${p => p.theme.white};
+  cursor: pointer;
+  display: block;
+  font-size: 0.9rem;
   padding: 1rem;
   text-align: center;
-  cursor: pointer;
-  color: ${p => p.theme.white};
+  text-transform: uppercase;
+  width: 100%;
 
   input {
     display: none;
@@ -35,41 +39,27 @@ const StyledNavButton = styled.label`
 `;
 
 const WeatherNav = ({ dayIndex, change }) => {
+  const buttons = [
+    { label: 'Today', id: 'today' },
+    { label: 'Tomorrow', id: 'tomorrow' },
+    { label: '10 Days', id: 'daily' },
+  ];
+
   return (
     <StyledNav dayIndex={dayIndex}>
-      <StyledNavButton htmlFor="today">
-        Today
-        <input
-          type="radio"
-          id="today"
-          name="today"
-          value="0"
-          checked={dayIndex === 0}
-          onChange={change}
-        />
-      </StyledNavButton>
-      <StyledNavButton htmlFor="tomorrow">
-        Tomorrow
-        <input
-          type="radio"
-          id="tomorrow"
-          name="tomorrow"
-          value="1"
-          checked={dayIndex === 1}
-          onChange={change}
-        />
-      </StyledNavButton>
-      <StyledNavButton htmlFor="daily">
-        10 Days
-        <input
-          type="radio"
-          id="daily"
-          name="daily"
-          value="2"
-          checked={dayIndex === 2}
-          onChange={change}
-        />
-      </StyledNavButton>
+      {buttons.map((btn, i) => (
+        <StyledNavButton key={btn.id} htmlFor={btn.id}>
+          {btn.label}
+          <input
+            type="radio"
+            id={btn.id}
+            name={btn.id}
+            value={i}
+            checked={dayIndex === i}
+            onChange={change}
+          />
+        </StyledNavButton>
+      ))}
     </StyledNav>
   );
 };

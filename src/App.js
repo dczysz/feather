@@ -11,9 +11,9 @@ import Menu from './components/Menu';
 
 const StyledApp = styled.div`
   background-image: linear-gradient(
-    350deg,
-    hsl(${p => p.bgHue}, 60%, 50%),
-    hsl(${p => p.bgHue}, 60%, 60%)
+    170deg,
+    hsl(${p => p.bgHue}, 60%, 60%),
+    hsl(${p => p.bgHue}, 60%, 30%)
   );
   color: ${p => p.theme.black};
   display: flex;
@@ -31,13 +31,14 @@ const StyledApp = styled.div`
 
 const theme = {
   lightBg: '#fff4',
-  white: '#fffc',
-  black: '#111',
+  black: '#111d',
+  white: 'hsl(195, 60%, 95%)',
   grey: '#111a',
-  lightGrey: '#1112',
-  shadow: '#1118',
+  lightGrey: '#1114',
+  shadow: '#1116',
   blue: 'hsl(195, 60%, 60%)',
   br: '0.3em',
+  error: '#b04',
 };
 
 const App = () => {
@@ -45,10 +46,10 @@ const App = () => {
   const BG_HUE = { day: 195, night: 240 };
 
   const [dayIndex, setDayIndex] = useState(
-    process.env.NODE_ENV === 'production' ? 0 : 0
+    process.env.NODE_ENV === 'production' ? 0 : 1
   );
   const [bgHue, setBgHue] = useState(BG_HUE.day);
-  const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [current, send] = useMachine(fetchMachine);
 
   const { weather } = current.context;

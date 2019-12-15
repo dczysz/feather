@@ -5,38 +5,71 @@ import icons from '../assets/icons';
 import { getTime } from '../util';
 
 const StyledDay = styled.div`
+  --larger-font: 1.1rem;
+  --text-shadow: 0 1px 1px;
+  color: ${p => p.theme.white};
+  padding: 0 1rem;
   position: relative;
-  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  text-shadow: var(--text-shadow) ${p => p.theme.shadow};
 
   p {
-    margin: 0;
-  }
+    margin: 1rem 0;
+    line-height: 1em;
 
-  .temp {
-    font-size: 4rem;
-
-    sup {
-      font-size: 0.5em;
+    &.black {
+      color: ${p => p.theme.black};
     }
   }
 
-  .image {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+  .left {
+    p {
+      &.date {
+        font-size: var(--larger-font);
+      }
+      &.temp {
+        font-size: 5rem;
+        line-height: normal;
+        margin: -1rem 0;
+
+        sup {
+          font-size: 0.5em;
+          font-weight: bold;
+        }
+      }
+
+      &.summary {
+        margin-top: 1rem;
+        font-size: var(--larger-font);
+      }
+    }
+  }
+
+  .right {
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
     svg {
-      --size: 40vw;
-      height: var(--size);
+      --size: 10rem;
       width: var(--size);
-      max-width: 10rem;
-      max-height: 10rem;
-      fill: pink;
-      margin-bottom: -2rem;
+      height: var(--size);
+      fill: ${p => p.theme.white};
     }
 
     p {
       text-align: center;
+      --margin: -2rem;
+
+      &.precip-probability {
+        margin-bottom: var(--margin);
+      }
+
+      &.summary {
+        margin-top: var(--margin);
+      }
     }
   }
 `;
@@ -55,32 +88,39 @@ const SingleDay = ({ weather, dayIndex }) => {
 
   return (
     <StyledDay dayIndex={dayIndex}>
-      <p className="date">{dateString}</p>
-      <p className="high-low">
-        Day {Math.round(daily.data[isToday ? 0 : 1].temperatureMax)}&deg; ⬆
-        &bull; Night {Math.round(daily.data[isToday ? 0 : 1].temperatureMin)}
-        &deg; ⬇{' '}
-      </p>
-      {isToday && (
-        <p className="temp">
-          {Math.round(currently.temperature)}&deg;<sup>F</sup>
+      <div className="left">
+        <p className="date black">{dateString}</p>
+        <p className="high-low">
+          Day {Math.round(daily.data[isToday ? 0 : 1].temperatureMax)}&deg; ⬆
+          &bull; Night {Math.round(daily.data[isToday ? 0 : 1].temperatureMin)}
+          &deg; ⬇{' '}
         </p>
-      )}
-      <p>
-        {isToday
-          ? `Feels like ${Math.round(currently.apparentTemperature)}`
-          : selectedDay.summary}
-      </p>
+        {isToday && (
+          <p className="temp">
+            {Math.round(currently.temperature)}&deg;<sup>F</sup>
+          </p>
+        )}
 
-      <div className="image">
+        {isToday ? (
+          <p className="feels-like">
+            Feels like {Math.round(currently.apparentTemperature)}&deg;
+          </p>
+        ) : (
+          <p className="summary">{selectedDay.summary}</p>
+        )}
+      </div>
+
+      <div className="right">
         {selectedDay.precipProbability >= 0.1 &&
         ['rain', 'snow', 'sleet', 'hail', 'thunderstorm', 'tornado'].includes(
           selectedDay.icon
         ) ? (
-          <p>{selectedDay.precipProbability * 100}%</p>
+          <p className="precip-probability">
+            {Math.round(selectedDay.precipProbability * 100)}%
+          </p>
         ) : null}
         <Icon />
-        <p>{isToday && selectedDay.summary}</p>
+        {isToday && <p className="summary">{selectedDay.summary}</p>}
       </div>
     </StyledDay>
   );

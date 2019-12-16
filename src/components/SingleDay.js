@@ -5,7 +5,7 @@ import icons from '../assets/icons';
 import { getTime } from '../util';
 
 const StyledDay = styled.div`
-  --larger-font: 1.1rem;
+  --larger-font: 1.2rem;
   --text-shadow: 0 1px 1px;
   color: ${p => p.theme.white};
   padding: 0 1rem;
@@ -91,9 +91,9 @@ const SingleDay = ({ weather, dayIndex }) => {
       <div className="left">
         <p className="date black">{dateString}</p>
         <p className="high-low">
-          Day {Math.round(daily.data[isToday ? 0 : 1].temperatureMax)}&deg; ⬆
+          Day {Math.round(daily.data[isToday ? 0 : 1].temperatureMax)}&deg;
           &bull; Night {Math.round(daily.data[isToday ? 0 : 1].temperatureMin)}
-          &deg; ⬇{' '}
+          &deg;
         </p>
         {isToday && (
           <p className="temp">

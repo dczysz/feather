@@ -54,12 +54,11 @@ const StyledCollapsingDay = styled.div`
 
         .precip-probability {
           color: ${p => p.theme.blue};
-          font-weight: bold;
           margin: 0.5rem 0;
         }
 
         svg {
-          height: 4.5rem;
+          height: 4.5em;
           margin: 0 -1rem;
           fill: ${p => p.theme.blue};
         }
@@ -67,10 +66,10 @@ const StyledCollapsingDay = styled.div`
         .temps {
           p {
             text-align: center;
-          }
 
-          .low {
-            color: ${p => p.theme.grey};
+            &.low {
+              color: ${p => p.theme.grey};
+            }
           }
         }
       }
@@ -97,9 +96,6 @@ const StyledCollapsingDay = styled.div`
         .label {
           color: ${p => p.theme.grey};
         }
-
-        .value {
-        }
       }
 
       &:focus {
@@ -118,8 +114,9 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
   const hiddenContent = [
     {
       label: 'Wind',
-      value:
-        Math.round(day.windSpeed) + 'mph' + degreeToDirection(day.windBearing),
+      value: `${Math.round(day.windSpeed)} mph ${degreeToDirection(
+        day.windBearing
+      )}`,
     },
     {
       label: 'Humidity',
@@ -182,10 +179,8 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
             )}
             <Icon />
             <div className="temps">
-              <p>{Math.round(day.apparentTemperatureHigh)}&deg;</p>
-              <p className="low">
-                {Math.round(day.apparentTemperatureLow)}&deg;
-              </p>
+              <p>{Math.round(day.temperatureMax)}&deg;</p>
+              <p className="low">{Math.round(day.temperatureMin)}&deg;</p>
             </div>
           </div>
         </div>

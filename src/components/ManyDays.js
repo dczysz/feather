@@ -40,11 +40,17 @@ const StyledManyDays = styled.div`
 `;
 
 const ManyDays = ({ daily, timeZone, moreInfoUrl }) => {
-  console.log('[ManyDays] props.daily: ', daily, timeZone);
+  // console.info(daily);
+  // console.log(
+  //   daily.map(d =>
+  //     new Date(d.time * 1000).toLocaleTimeString('en-US', { timeZone })
+  //   )
+  // );
+  // console.log(new Date().toDateString());
 
   return (
     <StyledManyDays>
-      {daily.data.map((d, i) => (
+      {daily.map((d, i) => (
         <CollapsingDay
           key={d.time}
           day={d}

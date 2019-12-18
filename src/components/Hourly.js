@@ -10,10 +10,15 @@ const StyledHourly = styled.div`
   overflow-x: auto;
 `;
 
-const Hourly = ({ hourlyArray, min, max }) => {
+const Hourly = ({ hourlyArray, min, max, timeZone }) => {
   return (
     <StyledHourly>
-      <Graph hourly={hourlyArray} minTemp={min} maxTemp={max} />
+      <Graph
+        hourly={hourlyArray}
+        minTemp={min}
+        maxTemp={max}
+        timeZone={timeZone}
+      />
     </StyledHourly>
   );
 };

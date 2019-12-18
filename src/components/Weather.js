@@ -3,26 +3,28 @@ import React from 'react';
 import SingleDay from './SingleDay';
 import ManyDays from './ManyDays';
 import Hourly from './Hourly';
-import { max, min } from '../util';
+import { max, min, getAdjustedDate } from '../util';
 
 const Weather = ({ weather, dayIndex }) => {
-  console.log(weather);
+  // console.log(weather);
   const hourlyTemps = weather.hourly.data.map(h => h.temperature);
   const maxTemp = max(hourlyTemps);
   const minTemp = min(hourlyTemps);
 
-  const trimHourly = (array, isToday) => {
+  const trimHourly = (hourly, isToday) => {
     const today = [];
     const tomorrow = [];
-    let startTomorrow = false;
+    let isTomorrow = false;
 
-    for (let data of array) {
-      const time = new Date(data.time * 1000)
-        .toLocaleTimeString()
-        .replace(':00:00', '');
-      if (time === '1 AM' && startTomorrow) break;
-      if (time === '1 AM' && !startTomorrow) startTomorrow = true;
-      !startTomorrow ? today.push(data) : tomorrow.push(data);
+    for (let hour of hourly) {
+      const date = getAdjustedDate(
+        new Date(hour.time * 1000),
+        weather.timezone
+      );
+      const time = date.toLocaleTimeString().replace(':00:00', '');
+      if (time === '1 AM' && isTomorrow) break;
+      if (time === '1 AM' && !isTomorrow) isTomorrow = true;
+      !isTomorrow ? today.push(hour) : tomorrow.push(hour);
     }
 
     return isToday ? today : tomorrow;
@@ -45,6 +47,7 @@ const Weather = ({ weather, dayIndex }) => {
             hourlyArray={trimHourly(weather.hourly.data, dayIndex === 0)}
             min={minTemp}
             max={maxTemp}
+            timeZone={weather.timezone}
           />
         </>
       )}

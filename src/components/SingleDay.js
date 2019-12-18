@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import icons from '../assets/icons';
-import { getTime } from '../util';
+import { getDateString } from '../util';
 
 const StyledDay = styled.div`
   --larger-font: 1.2rem;
@@ -80,11 +80,9 @@ const SingleDay = ({ weather, dayIndex }) => {
   const selectedDay = isToday ? currently : daily.data[1];
   const Icon = icons[selectedDay.icon];
 
-  const dateString = getTime(
-    currently.time * 1000,
-    weather.timezone,
-    dayIndex === 0
-  );
+  const time = isToday ? currently.time * 1000 : daily.data[1].time * 1000;
+
+  const dateString = getDateString(time, weather.timezone, isToday);
 
   return (
     <StyledDay dayIndex={dayIndex}>

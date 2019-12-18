@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { getTime, degreeToDirection } from '../util';
+import { getDateString, degreeToDirection } from '../util';
 import icons from '../assets/icons';
 
 const expandAnimation = keyframes`
@@ -142,11 +142,11 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
     {
       label: 'Sunrise/Sunset',
       value:
-        getTime(day.sunriseTime * 1000, timeZone, true)
+        getDateString(day.sunriseTime * 1000, timeZone, true)
           .split(',')[1]
           .trim() +
         ', ' +
-        getTime(day.sunsetTime * 1000, timeZone, true)
+        getDateString(day.sunsetTime * 1000, timeZone, true)
           .split(',')[1]
           .trim(),
     },
@@ -167,7 +167,9 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
         <div className="clickable-content">
           <div className="summary">
             <p>
-              {isToday ? 'Today' : new Date(day.time * 1000).toDateString()}
+              {isToday
+                ? 'Today'
+                : getDateString(day.time * 1000, timeZone, false)}
             </p>
             <p>{day.summary}</p>
           </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import icons from '../assets/icons';
-import { calculateRatioValue } from '../util';
+import { calculateRatioValue, getHourlyTimeString } from '../util';
 
 const clipAnimation = keyframes`
   from {
@@ -66,7 +66,7 @@ const StyledGraph = styled.div`
   }
 `;
 
-const Graph = ({ hourly, minTemp, maxTemp }) => {
+const Graph = ({ hourly, minTemp, maxTemp, timeZone }) => {
   const ANIMATION_TIME = 40 * hourly.length;
   const graphRef = useRef();
 
@@ -80,7 +80,7 @@ const Graph = ({ hourly, minTemp, maxTemp }) => {
   }, [hourly]);
 
   const hourData = hourly.map(h => ({
-    time: new Date(h.time * 1000).toLocaleTimeString().replace(':00:00', ''),
+    time: getHourlyTimeString(h.time * 1000, timeZone),
     icon: h.icon,
     showPrecip: shouldShowPrecip(h),
     temp: h.temperature,

@@ -39,30 +39,20 @@ const StyledManyDays = styled.div`
   }
 `;
 
-const ManyDays = ({ daily, timeZone, moreInfoUrl }) => {
-  // console.info(daily);
-  // console.log(
-  //   daily.map(d =>
-  //     new Date(d.time * 1000).toLocaleTimeString('en-US', { timeZone })
-  //   )
-  // );
-  // console.log(new Date().toDateString());
-
-  return (
-    <StyledManyDays>
-      {daily.map((d, i) => (
-        <CollapsingDay
-          key={d.time}
-          day={d}
-          timeZone={timeZone}
-          isToday={i === 0}
-        />
-      ))}
-      <div className="more-info">
-        <a href={moreInfoUrl}>View web results</a>
-      </div>
-    </StyledManyDays>
-  );
-};
+const ManyDays = ({ daily, timeZone, moreInfoUrl }) => (
+  <StyledManyDays>
+    {daily.map((d, i) => (
+      <CollapsingDay
+        key={d.time}
+        day={d}
+        timeZone={timeZone}
+        isToday={i === 0}
+      />
+    ))}
+    <div className="more-info">
+      <a href={moreInfoUrl}>View web results</a>
+    </div>
+  </StyledManyDays>
+);
 
 export default ManyDays;

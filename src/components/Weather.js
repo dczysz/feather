@@ -6,7 +6,6 @@ import Hourly from './Hourly';
 import { max, min, getAdjustedDate } from '../util';
 
 const Weather = ({ weather, dayIndex }) => {
-  // console.log(weather);
   const hourlyTemps = weather.hourly.data.map(h => h.temperature);
   const maxTemp = max(hourlyTemps);
   const minTemp = min(hourlyTemps);

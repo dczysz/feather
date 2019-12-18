@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { getDateString, degreeToDirection } from '../util';
-import icons from '../assets/icons';
+import icons from '../assets/icons/weather';
 
 const expandAnimation = keyframes`
   from {

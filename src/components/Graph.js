@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import icons from '../assets/icons';
+import icons from '../assets/icons/weather';
 import { calculateRatioValue, getHourlyTimeString } from '../util';
 
 const clipAnimation = keyframes`

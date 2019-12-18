@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import icons from '../assets/icons';
+import icons from '../assets/icons/weather';
 import { getDateString } from '../util';
 
 const StyledDay = styled.div`

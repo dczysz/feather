@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import { ReactComponent as SearchSvg } from '../assets/search.svg';
-import { ReactComponent as MenuIcon } from '../assets/menu.svg';
-import { ReactComponent as LoadingSvg } from '../assets/loader.svg';
+import { ReactComponent as SearchSvg } from '../assets/icons/search.svg';
+import { ReactComponent as MenuIcon } from '../assets/icons/menu.svg';
+import { ReactComponent as LoadingSvg } from '../assets/icons/loader.svg';
 
 const spinAnimation = keyframes`
   from {

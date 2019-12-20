@@ -59,8 +59,7 @@ const StyledGraph = styled.div`
       }
 
       .icon {
-        fill: ${p => p.theme.white};
-        stroke: none;
+        color: ${p => p.theme.white};
       }
     }
   }
@@ -74,9 +73,13 @@ const Graph = ({ hourly, minTemp, maxTemp, timeZone }) => {
     if (!hourly) return;
     const ref = graphRef.current;
     ref.classList.remove('animate');
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       ref.classList.add('animate');
     }, 0);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [hourly]);
 
   const hourData = hourly.map(h => ({
@@ -187,10 +190,8 @@ const Graph = ({ hourly, minTemp, maxTemp, timeZone }) => {
             return (
               <Icon
                 key={h.time}
-                x={getSvgX(opts.hourWidth, i, opts.ySize)}
+                x={getSvgX(opts.hourWidth, i, 36)}
                 y={opts.height - opts.ySize * 2}
-                width={opts.ySize}
-                height={opts.ySize}
                 className="icon"
               />
             );

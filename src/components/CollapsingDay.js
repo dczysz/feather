@@ -59,8 +59,8 @@ const StyledCollapsingDay = styled.div`
 
         svg {
           height: 4.5em;
-          margin: 0 -1rem;
-          fill: ${p => p.theme.blue};
+          margin: 0 1rem;
+          color: ${p => p.theme.blue};
         }
 
         .temps {

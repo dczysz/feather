@@ -47,29 +47,20 @@ const StyledDay = styled.div`
   }
 
   .right {
-    pointer-events: none;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    align-items: center;
 
     svg {
-      --size: 10rem;
+      --size: 5rem;
       width: var(--size);
       height: var(--size);
-      fill: ${p => p.theme.white};
+      color: ${p => p.theme.white};
     }
 
     p {
       text-align: center;
-      --margin: -2rem;
-
-      &.precip-probability {
-        margin-bottom: var(--margin);
-      }
-
-      &.summary {
-        margin-top: var(--margin);
-      }
     }
   }
 `;

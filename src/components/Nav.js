@@ -4,6 +4,8 @@ import styled from 'styled-components';
 const StyledNav = styled.nav`
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
+  max-width: ${p => p.theme.maxWidth};
   position: relative;
   overflow-x: hidden;
 
@@ -19,8 +21,12 @@ const StyledNav = styled.nav`
     left: calc(33.333% * ${p => p.navIndex});
     pointer-events: none;
     position: absolute;
-    transition: left 0.1s ease-in-out;
+    transition: left 0.2s ease-in-out;
     width: 33.333%;
+
+    @media screen and (min-width: ${p => p.theme.maxWidth}) {
+      border-radius: 1000px;
+    }
   }
 `;
 

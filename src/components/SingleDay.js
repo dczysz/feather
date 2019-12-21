@@ -14,6 +14,11 @@ const StyledDay = styled.div`
   justify-content: space-between;
   text-shadow: var(--text-shadow) ${p => p.theme.shadow};
 
+  @media screen and (min-width: ${p => p.theme.maxWidth}) {
+    margin: 0 auto;
+    width: ${p => p.theme.maxWidth};
+  }
+
   p {
     margin: 1rem 0;
     line-height: 1em;

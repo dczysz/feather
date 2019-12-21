@@ -18,6 +18,7 @@ const clipAnimation = keyframes`
 
 const StyledGraph = styled.div`
   height: 100%;
+  overflow-y: hidden;
 
   svg {
     display: block;

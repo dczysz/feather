@@ -43,10 +43,19 @@ const StyledCollapsingDay = styled.div`
       }
     }
 
+    .clickable-content,
+    .hidden-content {
+      max-width: ${p => p.theme.maxWidth};
+
+      @media screen and (min-width: ${p => p.theme.maxWidth}) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
     .clickable-content {
       display: flex;
       justify-content: space-between;
-      margin: 0;
 
       .icon-and-temp {
         display: flex;
@@ -87,6 +96,7 @@ const StyledCollapsingDay = styled.div`
         display: flex;
         justify-content: space-between;
         margin-top: 0;
+        max-width: calc(${p => p.theme.maxWidth} / 2);
 
         &:first-child {
           margin-top: 0.5rem;

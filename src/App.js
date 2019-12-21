@@ -47,6 +47,7 @@ const theme = {
       to: '240, 60%, 35%',
     },
   },
+  maxWidth: '768px',
 };
 
 const App = () => {

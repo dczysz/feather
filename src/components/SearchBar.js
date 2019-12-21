@@ -40,12 +40,14 @@ const StyledSearchBar = styled.form`
   margin: 1rem 1rem 0 1rem;
 
   .input-container {
+    align-items: center;
     background-color: ${p => p.theme.white};
     border-radius: ${p => p.theme.br};
     display: flex;
-    align-items: center;
-    position: relative;
     height: 3rem;
+    margin: 0 auto;
+    max-width: ${p => p.theme.maxWidth};
+    position: relative;
 
     input {
       background-color: transparent;
@@ -60,20 +62,20 @@ const StyledSearchBar = styled.form`
     }
 
     button {
-      padding: 0.5rem;
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      background-color: transparent;
       border: none;
       cursor: pointer;
-      margin: 0 0.5rem;
-      background-color: transparent;
-      height: 3rem;
-      width: auto;
+      display: flex;
+      flex-direction: column;
       font-size: 1rem;
-      line-height: 1rem;
       font-weight: bold;
+      height: 3rem;
+      justify-content: center;
+      line-height: 1rem;
+      margin: 0 0.5rem;
+      padding: 0.5rem;
+      width: auto;
 
       svg {
         height: 1.5em;

@@ -5,7 +5,8 @@ import ManyDays from './ManyDays';
 import Hourly from './Hourly';
 import { max, min, getAdjustedDate } from '../util';
 
-const Weather = ({ weather, dayIndex }) => {
+const Weather = ({ current }) => {
+  const { weather, navIndex } = current.context;
   const hourlyTemps = weather.hourly.data.map(h => h.temperature);
   const maxTemp = max(hourlyTemps);
   const minTemp = min(hourlyTemps);
@@ -33,7 +34,7 @@ const Weather = ({ weather, dayIndex }) => {
 
   return (
     <>
-      {dayIndex === 2 ? (
+      {navIndex === 2 ? (
         <ManyDays
           daily={weather.daily.data}
           timeZone={weather.timezone}
@@ -41,12 +42,13 @@ const Weather = ({ weather, dayIndex }) => {
         />
       ) : (
         <>
-          <SingleDay weather={weather} dayIndex={dayIndex} />
+          <SingleDay weather={weather} navIndex={navIndex} />
           <Hourly
-            hourlyArray={trimHourly(weather.hourly.data, dayIndex === 0)}
+            hourlyArray={trimHourly(weather.hourly.data, navIndex === 0)}
             min={minTemp}
             max={maxTemp}
             timeZone={weather.timezone}
+            current={current}
           />
         </>
       )}

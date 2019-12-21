@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { useMachine } from '@xstate/react';
 
-import fetchMachine from './fetchMachine';
+import weatherMachine from './weatherMachine';
 import SearchBar from './components/SearchBar';
 import Weather from './components/Weather';
 import Nav from './components/Nav';
-import { calculateRatio } from './util';
 import Menu from './components/Menu';
 
 const StyledApp = styled.div`
   background-image: linear-gradient(
     170deg,
-    hsl(${p => p.bgHue}, 60%, 60%),
-    hsl(${p => p.bgHue}, 60%, 30%)
+    hsl(${p => p.theme.bgHsl[p.bg].from}),
+    hsl(${p => p.theme.bgHsl[p.bg].to})
   );
   color: ${p => p.theme.black};
   display: flex;
@@ -31,7 +30,6 @@ const StyledApp = styled.div`
 
 const theme = {
   black: '#333',
-  blue: 'hsl(195, 60%, 60%)',
   br: '0.3em',
   error: '#b04',
   grey: '#666',
@@ -39,61 +37,46 @@ const theme = {
   lightGrey: '#aaa',
   shadow: '#1116',
   white: '#ebf6fa',
+  bgHsl: {
+    day: {
+      from: '195, 60%, 60%',
+      to: '195, 60%, 30%',
+    },
+    night: {
+      from: '240, 60%, 65%',
+      to: '240, 60%, 35%',
+    },
+  },
 };
 
 const App = () => {
-  const BG_HUE = { day: 195, night: 240 };
+  const [current, send] = useMachine(weatherMachine);
 
-  const [dayIndex, setDayIndex] = useState(
-    process.env.NODE_ENV === 'production' ? 0 : 1
-  );
-  const [bgHue, setBgHue] = useState(BG_HUE.day);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [current, send] = useMachine(fetchMachine);
-
-  const { weather } = current.context;
-
-  const memoizedBgHueHandler = useCallback(
-    ratio => {
-      const hue = ratio > 0 && ratio < 1 ? BG_HUE.day : BG_HUE.night;
-      setBgHue(hue);
-    },
-    [BG_HUE.day, BG_HUE.night]
-  );
-
-  useEffect(() => {
-    if (!weather) return;
-
-    memoizedBgHueHandler(
-      dayIndex === 0
-        ? calculateRatio(
-            weather.currently.time,
-            weather.daily.data[0].sunriseTime,
-            weather.daily.data[0].sunsetTime
-          )
-        : 0.5
-    );
-  }, [weather, memoizedBgHueHandler, dayIndex]);
-
+  const { weather, navIndex, menuOpen } = current.context;
+  const bg =
+    !weather || navIndex !== 0
+      ? 'day'
+      : weather.currently.time > weather.daily.data[0].sunriseTime &&
+        weather.currently.time < weather.daily.data[0].sunsetTime
+      ? 'day'
+      : 'night';
   const dayIndexChangedHandler = e => {
     const { value: index } = e.target;
-    setDayIndex(+index);
+    send('CHANGE_NAV_INDEX', { value: +index });
   };
 
   const toggleMenu = e => {
-    e && e.preventDefault();
-    setMenuOpen(!menuOpen);
-    return false;
+    send('TOGGLE_MENU');
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledApp bgHue={bgHue}>
+      <StyledApp bg={bg || 'day'}>
         <div className="top-bar">
           <SearchBar current={current} send={send} showMenu={toggleMenu} />
-          <Nav dayIndex={dayIndex} change={dayIndexChangedHandler} />
+          <Nav navIndex={navIndex} change={dayIndexChangedHandler} />
         </div>
-        {weather && <Weather weather={weather} dayIndex={dayIndex} />}
+        {weather && <Weather current={current} />}
         <Menu
           isOpen={menuOpen}
           close={toggleMenu}

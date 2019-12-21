@@ -65,9 +65,9 @@ const StyledDay = styled.div`
   }
 `;
 
-const SingleDay = ({ weather, dayIndex }) => {
+const SingleDay = ({ weather, navIndex }) => {
   const { currently, daily } = weather;
-  const isToday = dayIndex === 0;
+  const isToday = navIndex === 0;
   const selectedDay = isToday ? currently : daily.data[1];
   const Icon = icons[selectedDay.icon];
 
@@ -76,7 +76,7 @@ const SingleDay = ({ weather, dayIndex }) => {
   const dateString = getDateString(time, weather.timezone, isToday);
 
   return (
-    <StyledDay dayIndex={dayIndex}>
+    <StyledDay navIndex={navIndex}>
       <div className="left">
         <p className="date black">{dateString}</p>
         <p className="high-low">

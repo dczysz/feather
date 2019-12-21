@@ -65,12 +65,15 @@ const StyledGraph = styled.div`
   }
 `;
 
-const Graph = ({ hourly, minTemp, maxTemp, timeZone }) => {
+const Graph = ({ hourly, minTemp, maxTemp, timeZone, current }) => {
   const ANIMATION_TIME = 40 * hourly.length;
   const graphRef = useRef();
 
   useEffect(() => {
-    if (!hourly) return;
+    const { type } = current.event;
+    if (!['done.invoke.fetch-weather', 'CHANGE_NAV_INDEX'].includes(type))
+      return;
+
     const ref = graphRef.current;
     ref.classList.remove('animate');
     const timeout = setTimeout(() => {
@@ -80,7 +83,7 @@ const Graph = ({ hourly, minTemp, maxTemp, timeZone }) => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [hourly]);
+  });
 
   const hourData = hourly.map(h => ({
     time: getHourlyTimeString(h.time * 1000, timeZone),

@@ -7,25 +7,38 @@ import axios from 'axios';
 const fetchWeather = context => {
   const { query } = context;
 
-  return axios.get('/api/weather/' + query).then(res => res.data);
+  return axios.get('/api/weather/' + query).then(res => {
+    return res.data ? res.data : Promise.reject('Could not locate ' + query);
+  });
 };
-
-const fetchMachine = Machine({
-  id: 'fetch',
+const weatherMachine = Machine({
+  id: 'weatherMachine',
   initial: 'idle',
   context: {
     query: '',
     weather: null,
+    navIndex: 0,
+    menuOpen: false,
   },
   states: {
     idle: {
       on: {
-        CHANGE: {
+        FETCH: {
+          target: 'loading',
           actions: assign({
             query: (_ctx, e) => e.value,
           }),
         },
-        FETCH: 'loading',
+        CHANGE_NAV_INDEX: {
+          actions: assign({
+            navIndex: (_ctx, e) => e.value,
+          }),
+        },
+        TOGGLE_MENU: {
+          actions: assign({
+            menuOpen: (ctx, _e) => !ctx.menuOpen,
+          }),
+        },
       },
     },
     loading: {
@@ -38,10 +51,17 @@ const fetchMachine = Machine({
             weather: (_ctx, e) => e.data,
           }),
         },
-        onError: 'idle',
+        onError: 'error',
+      },
+    },
+    error: {
+      on: {
+        CLEAR_ERROR: {
+          target: 'idle',
+        },
       },
     },
   },
 });
 
-export default fetchMachine;
+export default weatherMachine;

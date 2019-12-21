@@ -52,15 +52,18 @@ const StyledCollapsingDay = styled.div`
         display: flex;
         align-items: center;
 
+        .precip-probability,
+        svg {
+          color: hsl(${p => p.theme.bgHsl.day.from});
+        }
+
         .precip-probability {
-          color: ${p => p.theme.blue};
           margin: 0.5rem 0;
         }
 
         svg {
           height: 4.5em;
           margin: 0 1rem;
-          color: ${p => p.theme.blue};
         }
 
         .temps {

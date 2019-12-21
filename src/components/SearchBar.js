@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { ReactComponent as SearchSvg } from '../assets/icons/search.svg';
@@ -106,44 +106,25 @@ const getParameterValue = (name, url = window.location.search) => {
 };
 
 const SearchBar = ({ current, send, showMenu }) => {
-  const [query, setQuery] = useState(current.context.query);
-  const [error, setError] = useState(false);
-  const inputRef = useRef();
-
-  const fetchWeatherData = useCallback(
-    query => {
-      if (query) {
-        setError(false);
-        send('CHANGE', { value: query });
-        send('FETCH');
-      }
-    },
-    [send]
-  );
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     const paramQuery = getParameterValue('q');
 
     if (paramQuery) {
-      window.history.pushState({ data: null }, null, '');
       setQuery(paramQuery);
-
-      setTimeout(() => fetchWeatherData(paramQuery), 0);
+      send('FETCH', { value: paramQuery });
     }
-  }, [fetchWeatherData]);
+  }, [send]);
 
-  useEffect(() => {
-    setError(!current.context.weather && current.context.query !== '');
-  }, [current.context, current.context.query]);
-
-  const changeHandler = e => {
-    setQuery(e.target.value);
-    setError(false);
+  const changeHandler = ({ target: { value } }) => {
+    setQuery(value);
+    if (current.matches('error')) send('CLEAR_ERROR');
   };
 
   const submitHandler = e => {
     e.preventDefault();
-    fetchWeatherData(query);
+    send('FETCH', { value: query });
   };
 
   return (
@@ -157,14 +138,13 @@ const SearchBar = ({ current, send, showMenu }) => {
           value={query}
           onChange={changeHandler}
           placeholder="City and State"
-          ref={inputRef}
           aria-label="City and State"
         />
         <button type="submit" aria-label="Go">
           {current.matches('loading') ? (
             <LoadingSvg className="spin" />
           ) : (
-            <SearchSvg className={error ? 'error' : ''} />
+            <SearchSvg className={current.matches('error') ? 'error' : ''} />
           )}
         </button>
       </div>

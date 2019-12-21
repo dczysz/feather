@@ -7,15 +7,16 @@ const StyledNav = styled.nav`
   position: relative;
   overflow-x: hidden;
 
-  --left-br: ${p => (p.dayIndex === 0 ? '0px' : '1000px')};
-  --right-br: ${p => (p.dayIndex === 2 ? '0px' : '1000px')};
+  --left-br: ${p => (p.navIndex === 0 ? '0px' : '1000px')};
+  --right-br: ${p => (p.navIndex === 2 ? '0px' : '1000px')};
+
   ::after {
     background-color: ${p => p.theme.white};
     border-radius: var(--left-br) var(--right-br) var(--right-br) var(--left-br);
     bottom: 1px;
     content: '';
     height: 4px;
-    left: calc(33.333% * ${p => p.dayIndex});
+    left: calc(33.333% * ${p => p.navIndex});
     pointer-events: none;
     position: absolute;
     transition: left 0.1s ease-in-out;
@@ -38,7 +39,7 @@ const StyledNavButton = styled.label`
   }
 `;
 
-const WeatherNav = ({ dayIndex, change }) => {
+const WeatherNav = ({ navIndex, change }) => {
   const buttons = [
     { label: 'Today', id: 'today' },
     { label: 'Tomorrow', id: 'tomorrow' },
@@ -46,7 +47,7 @@ const WeatherNav = ({ dayIndex, change }) => {
   ];
 
   return (
-    <StyledNav dayIndex={dayIndex}>
+    <StyledNav navIndex={navIndex}>
       {buttons.map((btn, i) => (
         <StyledNavButton key={btn.id} htmlFor={btn.id}>
           {btn.label}
@@ -55,7 +56,7 @@ const WeatherNav = ({ dayIndex, change }) => {
             id={btn.id}
             name={btn.id}
             value={i}
-            checked={dayIndex === i}
+            checked={navIndex === i}
             onChange={change}
           />
         </StyledNavButton>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { ReactComponent as SearchSvg } from '../assets/icons/search.svg';
@@ -20,16 +20,16 @@ const errorAnimation = keyframes`
     transform: translateX(0);
   }
   20% {
-    transform: translateX(-30%);
+    transform: translateX(-25%);
   }
   40% {
-    transform: translateX(25%);
+    transform: translateX(20%);
   }
   60% {
-    transform: translateX(-20%);
+    transform: translateX(-10%);
   }
   80% {
-    transform: translateX(10%);
+    transform: translateX(5%);
   }
   100% {
     transform: translateX(0);
@@ -65,6 +65,7 @@ const StyledSearchBar = styled.form`
       align-items: center;
       background-color: transparent;
       border: none;
+      color: ${p => p.theme.grey};
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -75,11 +76,17 @@ const StyledSearchBar = styled.form`
       line-height: 1rem;
       margin: 0 0.5rem;
       padding: 0.5rem;
+      transition: color 200ms;
       width: auto;
+
+      :disabled {
+        color: ${p => p.theme.lightGrey};
+        cursor: default;
+      }
 
       svg {
         height: 1.5em;
-        stroke: ${p => p.theme.grey};
+        stroke: currentColor;
 
         &.error {
           animation: ${errorAnimation} 300ms;
@@ -87,7 +94,7 @@ const StyledSearchBar = styled.form`
         }
 
         &.spin {
-          animation: ${spinAnimation} 1000ms infinite linear;
+          animation: ${spinAnimation} 1200ms infinite linear;
         }
       }
 
@@ -102,31 +109,17 @@ const StyledSearchBar = styled.form`
   }
 `;
 
-const getParameterValue = (name, url = window.location.search) => {
-  const params = new URLSearchParams(url);
-  return params.get(name);
-};
-
 const SearchBar = ({ current, send, showMenu }) => {
-  const [query, setQuery] = useState('');
-
-  useEffect(() => {
-    const paramQuery = getParameterValue('q');
-
-    if (paramQuery) {
-      setQuery(paramQuery);
-      send('FETCH', { value: paramQuery });
-    }
-  }, [send]);
+  const [query, setQuery] = useState(current.context.query);
 
   const changeHandler = ({ target: { value } }) => {
     setQuery(value);
     if (current.matches('error')) send('CLEAR_ERROR');
   };
 
-  const submitHandler = e => {
-    e.preventDefault();
-    send('FETCH', { value: query });
+  const submitHandler = (e = null) => {
+    e && e.preventDefault();
+    query !== '' && send('FETCH', { value: query });
   };
 
   return (
@@ -142,7 +135,7 @@ const SearchBar = ({ current, send, showMenu }) => {
           placeholder="City and State"
           aria-label="City and State"
         />
-        <button type="submit" aria-label="Go">
+        <button type="submit" aria-label="Go" disabled={query === ''}>
           {current.matches('loading') ? (
             <LoadingSvg className="spin" />
           ) : (

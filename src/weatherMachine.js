@@ -1,24 +1,33 @@
-// https://xstate.js.org/docs/tutorials/reddit.html#async-flow
-// https://codesandbox.io/embed/33wr94qv1
-
 import { Machine, assign } from 'xstate';
 import axios from 'axios';
 
-const fetchWeather = context => {
-  const { query } = context;
+import { getParameterValue } from './util';
 
-  return axios.get('/api/weather/' + query).then(res => {
-    return res.data ? res.data : Promise.reject('Could not locate ' + query);
-  });
-};
+const fetchWeather = async ({ query }) =>
+  await axios
+    .get('/api/weather/' + query)
+    .then(res => res.data || Promise.reject());
+
 const weatherMachine = Machine({
   id: 'weatherMachine',
   initial: 'idle',
   context: {
-    query: '',
+    query: getParameterValue('q') || '',
     weather: null,
     navIndex: 0,
     menuOpen: false,
+  },
+  on: {
+    CHANGE_NAV_INDEX: {
+      actions: assign({
+        navIndex: (_ctx, e) => e.value,
+      }),
+    },
+    TOGGLE_MENU: {
+      actions: assign({
+        menuOpen: (ctx, _e) => !ctx.menuOpen,
+      }),
+    },
   },
   states: {
     idle: {
@@ -27,16 +36,6 @@ const weatherMachine = Machine({
           target: 'loading',
           actions: assign({
             query: (_ctx, e) => e.value,
-          }),
-        },
-        CHANGE_NAV_INDEX: {
-          actions: assign({
-            navIndex: (_ctx, e) => e.value,
-          }),
-        },
-        TOGGLE_MENU: {
-          actions: assign({
-            menuOpen: (ctx, _e) => !ctx.menuOpen,
           }),
         },
       },

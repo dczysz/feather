@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { useMachine } from '@xstate/react';
 
@@ -61,14 +61,26 @@ const App = () => {
         weather.currently.time < weather.daily.data[0].sunsetTime
       ? 'day'
       : 'night';
+
   const dayIndexChangedHandler = e => {
     const { value: index } = e.target;
     send('CHANGE_NAV_INDEX', { value: +index });
   };
 
-  const toggleMenu = e => {
+  const toggleMenu = () => {
     send('TOGGLE_MENU');
   };
+
+  // Send FETCH event if machine loads with query param search query
+  // TODO: Find a better way to do this in the machine itself
+  const fetchWeatherOnLoad = useCallback(() => {
+    if (current.context.query !== '')
+      send('FETCH', { value: current.context.query });
+  }, [current.context.query, send]);
+
+  useEffect(() => {
+    fetchWeatherOnLoad();
+  }, [fetchWeatherOnLoad]);
 
   return (
     <ThemeProvider theme={theme}>

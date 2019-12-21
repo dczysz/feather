@@ -9,6 +9,8 @@ const StyledMenu = styled.div`
   transition: all var(--animation-time);
   pointer-events: ${p => (p.open ? 'all' : 'none')};
   overflow-y: hidden;
+  visibility: ${p =>
+    p.open ? 'visible' : 'hidden'}; /* block tab focus when not open */
 
   &,
   & .background {
@@ -120,7 +122,7 @@ const Menu = ({ isOpen, close, query }) => {
   };
 
   return (
-    <StyledMenu open={isOpen}>
+    <StyledMenu open={isOpen} aria-hidden={!isOpen}>
       <div className="background" onClick={close}></div>
       <div className="menu-container">
         <h2>Featherr</h2>

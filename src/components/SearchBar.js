@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import { ReactComponent as SearchSvg } from '../assets/icons/search.svg';
 import { ReactComponent as MenuIcon } from '../assets/icons/menu.svg';
 import { ReactComponent as LoadingSvg } from '../assets/icons/loader.svg';
+import { ReactComponent as RefreshSvg } from '../assets/icons/refresh.svg';
 
 const spinAnimation = keyframes`
   from {
@@ -135,9 +136,17 @@ const SearchBar = ({ current, send, showMenu }) => {
           placeholder="City and State"
           aria-label="City and State"
         />
-        <button type="submit" aria-label="Go" disabled={query === ''}>
+        <button
+          type="submit"
+          aria-label="Go"
+          disabled={query === '' || current.matches('loading')}
+        >
           {current.matches('loading') ? (
             <LoadingSvg className="spin" />
+          ) : query !== '' &&
+            query === current.context.query &&
+            !current.matches('error') ? (
+            <RefreshSvg />
           ) : (
             <SearchSvg className={current.matches('error') ? 'error' : ''} />
           )}

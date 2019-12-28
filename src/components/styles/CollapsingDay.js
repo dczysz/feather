@@ -2,11 +2,11 @@ import styled, { keyframes } from 'styled-components';
 
 const expandAnimation = keyframes`
   from {
-    max-height: 0px;
+    margin-top: -5rem;
   }
 
   to {
-    max-height: 4.5rem;
+    margin-top: initial;
   }
 `;
 
@@ -16,8 +16,12 @@ export default styled.div`
   animation: ${expandAnimation} var(--animation-time) ease;
   transition: all var(--transition-time);
   overflow-y: hidden;
-  border-bottom: 1px solid ${p => p.theme.grey};
+  border-top: ${p => p.theme.border};
   background-color: ${p => p.theme.white};
+
+  &:first-of-type {
+    border-top: none;
+  }
 
   button {
     all: inherit;

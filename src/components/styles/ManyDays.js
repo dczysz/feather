@@ -10,7 +10,7 @@ const opacityAnimation = keyframes`
 `;
 
 export default styled.div`
-  animation: ${opacityAnimation} 1000ms;
+  animation: ${opacityAnimation} 500ms;
   background-color: ${p => p.theme.lightBg};
   height: 100%;
   overflow-y: auto;
@@ -22,6 +22,7 @@ export default styled.div`
     justify-content: center;
     overflow: hidden;
     padding: 1rem;
+    border-top: ${p => p.theme.border};
 
     a {
       background-color: ${p => p.theme.white};

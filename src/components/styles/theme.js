@@ -1,12 +1,6 @@
+const lightGrey = '#aaa';
+
 export default {
-  black: '#333',
-  br: '0.3em',
-  error: '#b04',
-  grey: '#666',
-  lightBg: '#fff4',
-  lightGrey: '#aaa',
-  shadow: '#1116',
-  white: '#ebf6fa',
   bgHsl: {
     day: {
       from: '195, 60%, 60%',
@@ -17,5 +11,14 @@ export default {
       to: '240, 60%, 35%',
     },
   },
+  black: '#333',
+  border: `1px solid ${lightGrey}`,
+  br: '0.3em',
+  error: '#b04',
+  grey: '#666',
+  lightGrey,
+  lightBg: '#fff4',
   maxWidth: '768px',
+  shadow: '#1116',
+  white: '#ebf6fa',
 };

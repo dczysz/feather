@@ -9,6 +9,7 @@ import SearchBar from './components/SearchBar';
 import Weather from './components/Weather';
 import Nav from './components/Nav';
 import Menu from './components/Menu';
+import GlobalStyle from './components/styles/GlobalStyle';
 
 const App = () => {
   const [current, send] = useMachine(weatherMachine);
@@ -31,6 +32,10 @@ const App = () => {
     send('TOGGLE_MENU');
   };
 
+  const setUnit = unit => {
+    send('CHANGE_UNIT', { unit });
+  };
+
   // Send FETCH event if machine loads with query param search query
   // TODO: Find a better way to do this in the machine itself
   const fetchWeatherOnLoad = useCallback(() => {
@@ -44,6 +49,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyle accentHsl={theme.bgHsl[bg || 'day'].from} />
       <StyledApp bg={bg || 'day'}>
         <div className="top-bar">
           <SearchBar current={current} send={send} showMenu={toggleMenu} />
@@ -54,6 +60,8 @@ const App = () => {
           isOpen={menuOpen}
           close={toggleMenu}
           query={current.context.query}
+          unit={current.context.unit}
+          setUnit={setUnit}
         />
       </StyledApp>
     </ThemeProvider>

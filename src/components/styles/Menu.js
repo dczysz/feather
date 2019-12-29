@@ -37,47 +37,79 @@ export default styled.div`
 
     h2 {
       text-align: center;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       margin: 1rem 0 0 0;
     }
 
     p {
-      margin: 1rem 0;
+      margin: 0.25rem 0;
+    }
+
+    button {
+      background-color: transparent;
+
+      &.span {
+        margin-left: 1ch;
+      }
+    }
+
+    button.btn,
+    label.btn {
+      border: 2px solid hsl(var(--accentHsl));
+      border-radius: ${p => p.theme.br};
+      box-shadow: 0 0 0 2px transparent, 0 0 0 4px transparent;
+      color: hsl(var(--accentHsl));
+      font-size: 0.9rem;
+      padding: 0.5em 1em;
+      transition: all 200ms;
+
+      :hover {
+        background-color: hsla(var(--accentHsl), 0.8);
+        color: ${p => p.theme.white};
+      }
+
+      :focus,
+      :active {
+        box-shadow: 0 0 0 2px ${p => p.theme.white},
+          0 0 0 4px hsl(var(--accentHsl));
+      }
+    }
+
+    input.btn {
+      :checked + label {
+        background-color: hsl(var(--accentHsl));
+        color: ${p => p.theme.white};
+      }
+
+      :focus + label {
+        box-shadow: 0 0 0 2px ${p => p.theme.white},
+          0 0 0 4px hsl(var(--accentHsl));
+      }
     }
 
     .label {
-      margin-bottom: 0.25rem;
-      display: flex;
       align-items: center;
-
-      button {
-        background-color: transparent;
-        border: 1px solid ${p => p.theme.grey};
-        border-radius: ${p => p.theme.br};
-        margin-left: 0.5ch;
-        padding: 0.1em;
-
-        &:hover,
-        &:active {
-          background-color: ${p => p.theme.lightGrey};
-        }
-      }
+      display: flex;
+      margin-top: 1.5rem;
     }
 
     .url {
       font-size: 0.9rem;
-      margin: 0;
 
       a {
         color: ${p => p.theme.grey};
-        text-overflow: ellipsis;
         display: block;
+        text-overflow: ellipsis;
       }
 
       input {
         all: inherit;
         width: 100%;
       }
+    }
+
+    .toggles {
+      display: flex;
     }
 
     .footer {

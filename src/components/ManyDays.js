@@ -3,7 +3,7 @@ import React from 'react';
 import StyledManyDays from './styles/ManyDays';
 import CollapsingDay from './CollapsingDay';
 
-const ManyDays = ({ daily, timeZone, moreInfoUrl }) => (
+const ManyDays = ({ daily, timeZone, moreInfoUrl, unit }) => (
   <StyledManyDays>
     {daily.map((d, i) => (
       <CollapsingDay
@@ -11,6 +11,7 @@ const ManyDays = ({ daily, timeZone, moreInfoUrl }) => (
         day={d}
         timeZone={timeZone}
         isToday={i === 0}
+        unit={unit}
       />
     ))}
     <div className="more-info">

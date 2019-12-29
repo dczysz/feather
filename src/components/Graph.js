@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import StyledGraph from './styles/Graph';
 import icons from '../assets/icons/weather';
-import { calculateRatioValue, getHourlyTimeString } from '../util';
+import { calculateRatioValue, getHourlyTimeString, fToC } from '../util';
 
 const Graph = ({ hourly, minTemp, maxTemp, timeZone, current }) => {
   const ANIMATION_TIME = 40 * hourly.length;
@@ -28,7 +28,7 @@ const Graph = ({ hourly, minTemp, maxTemp, timeZone, current }) => {
     time: getHourlyTimeString(h.time * 1000, timeZone),
     icon: h.icon,
     showPrecip: shouldShowPrecip(h),
-    temp: h.temperature,
+    temp: current.context.unit === 'C' ? fToC(h.temperature) : h.temperature,
   }));
 
   const opts = {

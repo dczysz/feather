@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import StyledCollapsingDay from './styles/CollapsingDay';
-import { getDateString, degreeToDirection } from '../util';
+import { getDateString, degreeToDirection, fToC } from '../util';
 import icons from '../assets/icons/weather';
 
-const CollapsingDay = ({ day, timeZone, isToday }) => {
+const CollapsingDay = ({ day, timeZone, isToday, unit }) => {
   const [open, setOpen] = useState(false);
   const Icon = icons[day.icon];
 
@@ -80,8 +80,18 @@ const CollapsingDay = ({ day, timeZone, isToday }) => {
             )}
             <Icon />
             <div className="temps">
-              <p>{Math.round(day.temperatureMax)}&deg;</p>
-              <p className="low">{Math.round(day.temperatureMin)}&deg;</p>
+              <p>
+                {Math.round(
+                  unit === 'C' ? fToC(day.temperatureMax) : day.temperatureMax
+                )}
+                &deg;
+              </p>
+              <p className="low">
+                {Math.round(
+                  unit === 'C' ? fToC(day.temperatureMin) : day.temperatureMin
+                )}
+                &deg;
+              </p>
             </div>
           </div>
         </div>

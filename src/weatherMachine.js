@@ -15,7 +15,8 @@ const weatherMachine = Machine({
     query: getParameterValue('q') || '',
     weather: null,
     navIndex: 0,
-    menuOpen: false,
+    menuOpen: true,
+    unit: 'F',
   },
   on: {
     CHANGE_NAV_INDEX: {
@@ -26,6 +27,11 @@ const weatherMachine = Machine({
     TOGGLE_MENU: {
       actions: assign({
         menuOpen: (ctx, _e) => !ctx.menuOpen,
+      }),
+    },
+    CHANGE_UNIT: {
+      actions: assign({
+        unit: (_ctx, e) => e.unit,
       }),
     },
   },

@@ -3,11 +3,13 @@ import React from 'react';
 import SingleDay from './SingleDay';
 import ManyDays from './ManyDays';
 import Hourly from './Hourly';
-import { max, min, getAdjustedDate } from '../util';
+import { max, min, getAdjustedDate, fToC } from '../util';
 
 const Weather = ({ current }) => {
   const { weather, navIndex } = current.context;
-  const hourlyTemps = weather.hourly.data.map(h => h.temperature);
+  const hourlyTemps = weather.hourly.data.map(h =>
+    current.context.unit === 'C' ? fToC(h.temperature) : h.temperature
+  );
   const maxTemp = max(hourlyTemps);
   const minTemp = min(hourlyTemps);
 
@@ -39,10 +41,15 @@ const Weather = ({ current }) => {
           daily={weather.daily.data}
           timeZone={weather.timezone}
           moreInfoUrl={moreInfoUrl}
+          unit={current.context.unit}
         />
       ) : (
         <>
-          <SingleDay weather={weather} navIndex={navIndex} />
+          <SingleDay
+            weather={weather}
+            navIndex={navIndex}
+            unit={current.context.unit}
+          />
           <Hourly
             hourlyArray={trimHourly(weather.hourly.data, navIndex === 0)}
             min={minTemp}

@@ -33,6 +33,7 @@ export default styled.nav`
     cursor: pointer;
     display: block;
     font-size: 0.9rem;
+    font-weight: bold;
     padding: 1rem;
     text-align: center;
     text-transform: uppercase;

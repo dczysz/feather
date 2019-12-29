@@ -115,15 +115,17 @@ export default styled.div`
     .footer {
       margin-top: auto;
 
-      .darksky {
+      a.darksky {
         display: block;
         margin: 0 auto;
         text-align: center;
         margin: 1rem 0;
 
-        img {
+        svg {
           max-width: 12rem;
           width: 100%;
+          height: auto;
+          fill: hsl(var(--accentHsl));
         }
       }
     }

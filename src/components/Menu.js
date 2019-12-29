@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 
 import StyledMenu from './styles/Menu';
 import { getParamUrl, copyToClipboard } from '../util';
-import darkSkyLogo from '../assets/powered-by-darksky.png';
 import ToggleButton from './ToggleButton';
+import { ReactComponent as DarkSkySvg } from '../assets/powered-by-darksky.svg';
 
 const Menu = ({ isOpen, close, query, unit, setUnit }) => {
   const [copied, setCopied] = useState(false);
@@ -57,7 +57,7 @@ const Menu = ({ isOpen, close, query, unit, setUnit }) => {
 
         <div className="footer">
           <a href="https://darksky.net/poweredby/" className="darksky">
-            <img src={darkSkyLogo} alt="Powered by Dark Sky" />
+            <DarkSkySvg />
           </a>
         </div>
       </div>

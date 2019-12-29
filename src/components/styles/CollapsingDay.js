@@ -44,6 +44,10 @@ export default styled.div`
       }
     }
 
+    .light {
+      color: ${p => p.theme.grey};
+    }
+
     .clickable-content,
     .hidden-content {
       max-width: ${p => p.theme.maxWidth};
@@ -79,10 +83,6 @@ export default styled.div`
         .temps {
           p {
             text-align: center;
-
-            &.low {
-              color: ${p => p.theme.grey};
-            }
           }
         }
       }
@@ -105,10 +105,6 @@ export default styled.div`
 
         span {
           width: 50%;
-        }
-
-        .label {
-          color: ${p => p.theme.grey};
         }
       }
 

@@ -73,7 +73,7 @@ const CollapsingDay = ({ day, timeZone, isToday, unit }) => {
                 ? 'Today'
                 : getDateString(day.time * 1000, timeZone, false)}
             </p>
-            <p>{day.summary}</p>
+            <p className="light">{day.summary}</p>
           </div>
           <div className="icon-and-temp">
             {precipExpected && (
@@ -89,7 +89,7 @@ const CollapsingDay = ({ day, timeZone, isToday, unit }) => {
                 )}
                 &deg;
               </p>
-              <p className="low">
+              <p className="light">
                 {Math.round(
                   isMetric ? fToC(day.temperatureMin) : day.temperatureMin
                 )}
@@ -104,8 +104,8 @@ const CollapsingDay = ({ day, timeZone, isToday, unit }) => {
             c =>
               c && (
                 <p key={c.label}>
-                  <span className="label">{c.label}</span>
-                  <span className="value">{c.value}</span>
+                  <span className="light">{c.label}</span>
+                  <span>{c.value}</span>
                 </p>
               )
           )}

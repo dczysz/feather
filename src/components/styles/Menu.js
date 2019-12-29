@@ -136,5 +136,6 @@ export default styled.div`
     opacity: ${p => (p.open ? 1 : 0)};
     transition: opacity var(--animation-time);
     width: 100%;
+    backdrop-filter: blur(2px);
   }
 `;

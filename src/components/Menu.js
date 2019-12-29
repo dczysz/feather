@@ -25,12 +25,7 @@ const Menu = ({ isOpen, close, query, unit, setUnit }) => {
         <h2>Feather</h2>
         {query && (
           <>
-            <p className="label">
-              Shortcut URL
-              <button className="btn span" onClick={copyUrl}>
-                {copied ? 'Copied' : 'Copy'}
-              </button>
-            </p>
+            <p className="label">Shortcut URL</p>
             <p className="url">
               <a href={getParamUrl([{ key: 'q', value: query }])}>
                 <input
@@ -41,6 +36,9 @@ const Menu = ({ isOpen, close, query, unit, setUnit }) => {
                 />
               </a>
             </p>
+            <button className="btn" onClick={copyUrl}>
+              {copied ? 'Copied' : 'Copy'}
+            </button>
           </>
         )}
 

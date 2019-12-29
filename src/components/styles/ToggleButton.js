@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
 const Label = styled.label`
-  margin-right: 0.5rem;
   text-transform: capitalize;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+
+  &:not(:last-child) {
+    margin-right: 0.5rem;
+  }
 `;
 
 const Input = styled.input`

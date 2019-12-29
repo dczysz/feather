@@ -42,7 +42,7 @@ export default styled.div`
     }
 
     p {
-      margin: 0.25rem 0;
+      margin: 0.5rem 0;
     }
 
     button {
@@ -60,7 +60,8 @@ export default styled.div`
       box-shadow: 0 0 0 2px transparent, 0 0 0 4px transparent;
       color: hsl(var(--accentHsl));
       font-size: 0.9rem;
-      padding: 0.5em 1em;
+      font-weight: bold;
+      padding: 0.5em;
       transition: all 200ms;
 
       :hover {
@@ -95,6 +96,7 @@ export default styled.div`
 
     .url {
       font-size: 0.9rem;
+      margin-top: 0;
 
       a {
         color: ${p => p.theme.grey};
@@ -122,7 +124,7 @@ export default styled.div`
         margin: 1rem 0;
 
         svg {
-          max-width: 12rem;
+          max-width: 14rem;
           width: 100%;
           height: auto;
           fill: hsl(var(--accentHsl));

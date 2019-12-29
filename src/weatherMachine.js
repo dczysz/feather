@@ -15,7 +15,7 @@ const weatherMachine = Machine({
     query: getParameterValue('q') || '',
     weather: null,
     navIndex: 0,
-    menuOpen: true,
+    menuOpen: false,
     unit: 'F',
   },
   on: {

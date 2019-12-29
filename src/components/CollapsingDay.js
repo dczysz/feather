@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 
 import StyledCollapsingDay from './styles/CollapsingDay';
-import { getDateString, degreeToDirection, fToC } from '../util';
+import { getDateString, degreeToDirection, fToC, mphToKph } from '../util';
 import icons from '../assets/icons/weather';
 
 const CollapsingDay = ({ day, timeZone, isToday, unit }) => {
   const [open, setOpen] = useState(false);
   const Icon = icons[day.icon];
+  const isMetric = unit.temp === 'C';
 
   const precipExpected = day.precipType && day.precipProbability >= 0.1;
 
   const hiddenContent = [
     {
       label: 'Wind',
-      value: `${Math.round(day.windSpeed)} mph ${degreeToDirection(
-        day.windBearing
-      )}`,
+      value: `${
+        isMetric
+          ? Math.round(mphToKph(day.windSpeed)) + ' kph'
+          : Math.round(day.windSpeed) + ' mph'
+      } ${degreeToDirection(day.windBearing)}`,
     },
     {
       label: 'Humidity',
@@ -82,13 +85,13 @@ const CollapsingDay = ({ day, timeZone, isToday, unit }) => {
             <div className="temps">
               <p>
                 {Math.round(
-                  unit === 'C' ? fToC(day.temperatureMax) : day.temperatureMax
+                  isMetric ? fToC(day.temperatureMax) : day.temperatureMax
                 )}
                 &deg;
               </p>
               <p className="low">
                 {Math.round(
-                  unit === 'C' ? fToC(day.temperatureMin) : day.temperatureMin
+                  isMetric ? fToC(day.temperatureMin) : day.temperatureMin
                 )}
                 &deg;
               </p>

@@ -7,7 +7,7 @@ import { getDateString, fToC } from '../util';
 const SingleDay = ({ weather, navIndex, unit }) => {
   const { currently, daily } = weather;
   const isToday = navIndex === 0;
-  const isCelcius = unit === 'C';
+  const isCelcius = unit.temp === 'C';
   const selectedDay = isToday ? currently : daily.data[1];
 
   const Icon = icons[selectedDay.icon];
@@ -43,7 +43,7 @@ const SingleDay = ({ weather, navIndex, unit }) => {
         </p>
         {isToday && (
           <p className="temp">
-            {currentTemp}&deg;<sup>{unit === 'C' ? 'C' : 'F'}</sup>
+            {currentTemp}&deg;<sup>{isCelcius ? 'C' : 'F'}</sup>
           </p>
         )}
 

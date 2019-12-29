@@ -2,6 +2,7 @@ import { Machine, assign } from 'xstate';
 import axios from 'axios';
 
 import { getParameterValue } from './util';
+import { unitTypes } from './types';
 
 const fetchWeather = async ({ query }) =>
   await axios
@@ -16,7 +17,7 @@ const weatherMachine = Machine({
     weather: null,
     navIndex: 0,
     menuOpen: false,
-    unit: 'F',
+    unit: unitTypes.imperial,
   },
   on: {
     CHANGE_NAV_INDEX: {

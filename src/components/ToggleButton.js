@@ -22,7 +22,7 @@ const ToggleButton = ({ value, checked, change }) => {
         className="btn"
       />
       <StyledToggleLabel htmlFor={value} className="btn">
-        &deg;{value}
+        {value}
       </StyledToggleLabel>
     </>
   );

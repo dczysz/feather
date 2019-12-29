@@ -10,6 +10,7 @@ import Weather from './components/Weather';
 import Nav from './components/Nav';
 import Menu from './components/Menu';
 import GlobalStyle from './components/styles/GlobalStyle';
+import { unitTypes } from './types';
 
 const App = () => {
   const [current, send] = useMachine(weatherMachine);
@@ -33,7 +34,7 @@ const App = () => {
   };
 
   const setUnit = unit => {
-    send('CHANGE_UNIT', { unit });
+    send('CHANGE_UNIT', { unit: unitTypes[unit] });
   };
 
   // Send FETCH event if machine loads with query param search query

@@ -4,6 +4,7 @@ import StyledMenu from './styles/Menu';
 import { getParamUrl, copyToClipboard } from '../util';
 import ToggleButton from './ToggleButton';
 import { ReactComponent as DarkSkySvg } from '../assets/powered-by-darksky.svg';
+import { unitTypes } from '../types';
 
 const Menu = ({ isOpen, close, query, unit, setUnit }) => {
   const [copied, setCopied] = useState(false);
@@ -45,11 +46,11 @@ const Menu = ({ isOpen, close, query, unit, setUnit }) => {
 
         <p className="label">Unit</p>
         <div className="toggles">
-          {['F', 'C'].map(u => (
+          {Object.entries(unitTypes).map(([key, value]) => (
             <ToggleButton
-              key={u}
-              value={u}
-              checked={unit === u}
+              key={key}
+              value={key}
+              checked={unit === value}
               change={setUnit}
             />
           ))}

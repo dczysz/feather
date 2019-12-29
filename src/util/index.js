@@ -77,3 +77,5 @@ export const copyToClipboard = el => {
 };
 
 export const fToC = tempF => (tempF - 32) * (5 / 9);
+
+export const mphToKph = mph => mph * 1.609344;

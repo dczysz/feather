@@ -28,7 +28,8 @@ const Graph = ({ hourly, minTemp, maxTemp, timeZone, current }) => {
     time: getHourlyTimeString(h.time * 1000, timeZone),
     icon: h.icon,
     showPrecip: shouldShowPrecip(h),
-    temp: current.context.unit === 'C' ? fToC(h.temperature) : h.temperature,
+    temp:
+      current.context.unit.temp === 'C' ? fToC(h.temperature) : h.temperature,
   }));
 
   const opts = {

@@ -8,7 +8,7 @@ import { max, min, getAdjustedDate, fToC } from '../util';
 const Weather = ({ current }) => {
   const { weather, navIndex } = current.context;
   const hourlyTemps = weather.hourly.data.map(h =>
-    current.context.unit === 'C' ? fToC(h.temperature) : h.temperature
+    current.context.unit.temp === 'C' ? fToC(h.temperature) : h.temperature
   );
   const maxTemp = max(hourlyTemps);
   const minTemp = min(hourlyTemps);

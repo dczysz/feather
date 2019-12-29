@@ -39,7 +39,9 @@ export default styled.nav`
     width: 100%;
 
     input {
-      display: none;
+      position: absolute;
+      clip: rect(0, 0, 0, 0);
+      clip: rect(0 0 0 0);
     }
   }
 `;

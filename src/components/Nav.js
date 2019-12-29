@@ -17,7 +17,7 @@ const WeatherNav = ({ navIndex, change }) => {
           <input
             type="radio"
             id={btn.id}
-            name={btn.id}
+            name="nav"
             value={i}
             checked={navIndex === i}
             onChange={change}

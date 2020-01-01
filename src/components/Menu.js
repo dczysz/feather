@@ -42,7 +42,7 @@ const Menu = ({ isOpen, close, query, unit, setUnit }) => {
           </>
         )}
 
-        <p className="label">Unit</p>
+        <p className="label">Units</p>
         <div className="toggles">
           {Object.entries(unitTypes).map(([key, value]) => (
             <ToggleButton

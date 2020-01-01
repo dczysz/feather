@@ -52,6 +52,7 @@ export default styled.div`
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
+    margin-left: 1rem;
 
     svg {
       --size: 5rem;

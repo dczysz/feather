@@ -31,6 +31,8 @@ const SearchBar = ({ current, send, showMenu }) => {
           onChange={changeHandler}
           placeholder="City and State"
           aria-label="City and State"
+          onFocus={e => e.target.select()}
+          onMouseUp={() => false} /* mouseup event deselects text */
         />
         <button
           type="submit"

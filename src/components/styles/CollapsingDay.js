@@ -65,6 +65,7 @@ export default styled.div`
       .icon-and-temp {
         display: flex;
         align-items: center;
+        margin-left: 1rem;
 
         .precip-probability,
         svg {

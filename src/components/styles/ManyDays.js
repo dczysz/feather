@@ -26,7 +26,8 @@ export default styled.div`
 
     a {
       background-color: ${p => p.theme.white};
-      box-shadow: 0 0 4px ${p => p.theme.shadow};
+      box-shadow: 0 8px 16px hsla(${p => p.theme.shadow}, 0.2),
+        0 6px 6px hsla(${p => p.theme.shadow}, 0.2);
       border: 1px solid ${p => p.theme.lightGrey};
       border-radius: ${p => p.theme.br};
       color: ${p => p.theme.black};

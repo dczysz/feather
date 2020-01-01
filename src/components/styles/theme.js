@@ -19,6 +19,6 @@ export default {
   lightGrey,
   lightBg: '#fff4',
   maxWidth: '768px',
-  shadow: '#1116',
+  shadow: '0, 0%, 20%',
   white: '#ebf6fa',
 };

@@ -134,7 +134,7 @@ export default styled.div`
   }
 
   .background {
-    background-color: ${p => p.theme.shadow};
+    background-color: hsla(${p => p.theme.shadow}, 0.4);
     opacity: ${p => (p.open ? 1 : 0)};
     transition: opacity var(--animation-time);
     width: 100%;

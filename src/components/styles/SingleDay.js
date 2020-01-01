@@ -8,7 +8,7 @@ export default styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
-  text-shadow: var(--text-shadow) ${p => p.theme.shadow};
+  text-shadow: var(--text-shadow) hsla(${p => p.theme.shadow}, 0.6);
 
   @media screen and (min-width: ${p => p.theme.maxWidth}) {
     margin: 0 auto;

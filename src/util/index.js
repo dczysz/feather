@@ -46,8 +46,6 @@ export const getHourlyTimeString = (timeMs, timeZone) => {
   let [hms, amPm] = timeStr.split(' ');
   const h = hms.split(':')[0];
 
-  console.log(amPm);
-
   // Fix 12:00 AM/PM
   amPm = h === '12' ? (amPm === 'AM' ? 'PM' : 'AM') : amPm;
 

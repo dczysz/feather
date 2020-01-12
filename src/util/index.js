@@ -43,8 +43,13 @@ export const getDateString = (timeMs, timeZone, isToday = false) => {
 export const getHourlyTimeString = (timeMs, timeZone) => {
   const date = getAdjustedDate(new Date(timeMs), timeZone);
   const timeStr = date.toLocaleTimeString();
-  const [hms, amPm] = timeStr.split(' ');
-  const h = +hms.split(':')[0].toString();
+  let [hms, amPm] = timeStr.split(' ');
+  const h = hms.split(':')[0];
+
+  console.log(amPm);
+
+  // Fix 12:00 AM/PM
+  amPm = h === '12' ? (amPm === 'AM' ? 'PM' : 'AM') : amPm;
 
   return `${h} ${amPm}`;
 };
